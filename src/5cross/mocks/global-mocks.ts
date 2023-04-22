@@ -9,3 +9,10 @@ export const QUESTIONS = [
         choices: [`${TEMPLATE_OPTIONS.consume_an_api}`]
     }
 ];
+
+export const ROUTES_ARCHITECTURE: string[] = [
+    '/data',
+    '/data/repositories',
+    '/domain',
+    '/facade'
+];

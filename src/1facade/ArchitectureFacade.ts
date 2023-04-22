@@ -2,20 +2,20 @@
 
 
 import { QuestionCollection } from "inquirer";
-import { IArchitectureAction } from "../4common-interfaces";
+import { IArchitectureEntity, IArchitectureFacade } from "../4common-interfaces";
 import { Injection } from "../5cross";
 
 
 
-export class ArchitectureFacade implements IArchitectureAction {
+export class ArchitectureFacade implements IArchitectureFacade {
 
     private readonly _architectureBusiness = Injection.InjectionArchitectureBusiness();
 
 
     constructor() { }
 
-    HasAllFolders(pathClient: string): Promise<boolean> {
-        throw new Error("Method not implemented.");
+    BuildArchitecture(architectureEntity: IArchitectureEntity): Promise<boolean> {
+        return this._architectureBusiness.BuildArchitecture(architectureEntity);
     }
 
     Questions(): Promise<QuestionCollection<any>> {
