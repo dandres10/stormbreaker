@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
 // Los imports
-const fs = require("fs");
-const path = require("path");
-const inquirer = require("inquirer");
-const shell = require("shelljs");
-const chalk = require("chalk");
+const fs = require('fs');
+const path = require('path');
+const inquirer = require('inquirer');
+const shell = require('shelljs');
+const chalk = require('chalk');
 
 // Obtener las opciones de los templates
-const TEMPLATE_OPTIONS = fs.readdirSync(path.join(__dirname, "templates"));
+const TEMPLATE_OPTIONS = fs.readdirSync(path.join(__dirname, 'templates'));
 
 const QUESTIONS = [
   {
@@ -35,7 +35,7 @@ inquirer.prompt(QUESTIONS).then((respuestas) => {
   const template = respuestas["template"];
   const proyecto = respuestas["proyecto"];
 
-  const templatePath = path.join(__dirname, "templates", template);
+  const templatePath = path.join(__dirname, 'templates', template);
   const pathTarget = path.join(DIR_ACTUAL, proyecto);
   if (!createProject(pathTarget)) return;
 
