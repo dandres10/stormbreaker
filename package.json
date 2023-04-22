@@ -1,11 +1,9 @@
 {
   "name": "stormbreaker-cli",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "develop": "nodemon ./src/index.ts",
     "start": "ts-node ./src/index.ts",
     "build": "tsc"
   },
@@ -27,6 +25,7 @@
     "ejs": "^3.1.8",
     "inquirer": "^8.0.0",
     "shelljs": "^0.8.5",
+    "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   },
   "devDependencies": {

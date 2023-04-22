@@ -3,54 +3,36 @@
 // Los imports
 import fs from "fs";
 import path from "path";
-import inquirer from "inquirer";
+import inquirer, { QuestionCollection } from "inquirer";
 import shell from "shelljs";
 import chalk from "chalk";
+import { Injection } from "./5cross";
 
-// Obtener las opciones de los templates
-const TEMPLATE_OPTIONS = ["consume an api", "Generar una pantalla"];
-// const ARCHITECTURE = [
-//     { file: "data", file: [Object] },
-//     { file: "domain", file: [Object] },
-//     { file: "facade", file: [Object] }
-// ];
 
-const QUESTIONS = [
-  {
-    name: "template",
-    type: "list",
-    message: "¿Qué tipo de proyecto quieres generar?",
-    choices: TEMPLATE_OPTIONS,
-  },
-  //   {
-  //     name: "proyecto",
-  //     type: "input",
-  //     message: "¿Cuál es el nombre del proyecto?",
-  //     validate: function (input) {
-  //       if (/^([a-z@]{1}[a-z\-\.\\\/0-9]{0,213})+$/.test(input)) {
-  //         return true;
-  //       }
-  //       return "El nombre del proyecto solo puede tener 214 carácteres y tiene que empezar en minúsculas o con una arroba";
-  //     },
-  //   },
-];
+let _architectureFacade = Injection.InjectionArchitectureFacade();
+
 
 const DIR_ACTUAL = process.cwd();
-inquirer.prompt(QUESTIONS).then((respuestas) => {
-  const template = respuestas["template"];
 
-  //   const templatePath = path.join(__dirname, 'templates', template);
-  const pathClient = path.join(DIR_ACTUAL, "src-cliente");
-  console.log('--->',pathClient);
-//   console.log(hasAllFolders(pathClient));
-  //   if (!createProject(pathTarget)) return;
+_architectureFacade.Questions().then((res: QuestionCollection<any>) => {
+  inquirer.prompt(res).then((respuestas) => {
+    const template = respuestas["template"];
 
-  //   createDirectoriesFilesContent(templatePath, proyecto);
+    //   const templatePath = path.join(__dirname, 'templates', template);
+    const pathClient = path.join(DIR_ACTUAL, "src-cliente");
+    console.log('--->', pathClient);
+    //   console.log(hasAllFolders(pathClient));
+    //   if (!createProject(pathTarget)) return;
 
-  //   postProccess(templatePath, pathTarget);
+    //   createDirectoriesFilesContent(templatePath, proyecto);
+
+    //   postProccess(templatePath, pathTarget);
+  });
 });
 
-function hasAllFolders(pathClient: any) {}
+function hasAllFolders(pathClient: any) {
+
+}
 
 function createProject(projectPath: any) {
   // Comprobar que no existe el directorio

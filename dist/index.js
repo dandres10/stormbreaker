@@ -1,52 +1,29 @@
 #!/usr/bin/env node
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
 // Los imports
-const fs_1 = __importDefault(require("fs"));
-const path_1 = __importDefault(require("path"));
-const inquirer_1 = __importDefault(require("inquirer"));
-const chalk_1 = __importDefault(require("chalk"));
-// Obtener las opciones de los templates
-const TEMPLATE_OPTIONS = ["consume an api", "Generar una pantalla"];
-// const ARCHITECTURE = [
-//     { file: "data", file: [Object] },
-//     { file: "domain", file: [Object] },
-//     { file: "facade", file: [Object] }
-// ];
-const QUESTIONS = [
-    {
-        name: "template",
-        type: "list",
-        message: "¿Qué tipo de proyecto quieres generar?",
-        choices: TEMPLATE_OPTIONS,
-    },
-    //   {
-    //     name: "proyecto",
-    //     type: "input",
-    //     message: "¿Cuál es el nombre del proyecto?",
-    //     validate: function (input) {
-    //       if (/^([a-z@]{1}[a-z\-\.\\\/0-9]{0,213})+$/.test(input)) {
-    //         return true;
-    //       }
-    //       return "El nombre del proyecto solo puede tener 214 carácteres y tiene que empezar en minúsculas o con una arroba";
-    //     },
-    //   },
-];
+const fs_1 = tslib_1.__importDefault(require("fs"));
+const path_1 = tslib_1.__importDefault(require("path"));
+const inquirer_1 = tslib_1.__importDefault(require("inquirer"));
+const chalk_1 = tslib_1.__importDefault(require("chalk"));
+const _5cross_1 = require("./5cross");
+let _architectureFacade = _5cross_1.Injection.InjectionArchitectureFacade();
 const DIR_ACTUAL = process.cwd();
-inquirer_1.default.prompt(QUESTIONS).then((respuestas) => {
-    const template = respuestas["template"];
-    //   const templatePath = path.join(__dirname, 'templates', template);
-    const pathClient = path_1.default.join(DIR_ACTUAL, "src-cliente");
-    console.log('--->', pathClient);
-    //   console.log(hasAllFolders(pathClient));
-    //   if (!createProject(pathTarget)) return;
-    //   createDirectoriesFilesContent(templatePath, proyecto);
-    //   postProccess(templatePath, pathTarget);
+_architectureFacade.Questions().then((res) => {
+    inquirer_1.default.prompt(res).then((respuestas) => {
+        const template = respuestas["template"];
+        //   const templatePath = path.join(__dirname, 'templates', template);
+        const pathClient = path_1.default.join(DIR_ACTUAL, "src-cliente");
+        console.log('--->', pathClient);
+        //   console.log(hasAllFolders(pathClient));
+        //   if (!createProject(pathTarget)) return;
+        //   createDirectoriesFilesContent(templatePath, proyecto);
+        //   postProccess(templatePath, pathTarget);
+    });
 });
-function hasAllFolders(pathClient) { }
+function hasAllFolders(pathClient) {
+}
 function createProject(projectPath) {
     // Comprobar que no existe el directorio
     if (fs_1.default.existsSync(projectPath)) {
