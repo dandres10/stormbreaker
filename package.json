@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "develop": "nodemon ./src/index.ts",
+    "start": "ts-node ./src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -16,13 +18,19 @@
     "url": "https://github.com/dandres10/stormbreaker/issues"
   },
   "bin": {
-    "cli-stormbreaker-generator": "./index.js"
+    "cli-stormbreaker-generator": "ts-node ./src/index.ts"
   },
   "homepage": "https://github.com/dandres10/stormbreaker#readme",
   "dependencies": {
     "chalk": "^4.1.2",
     "ejs": "^3.1.8",
     "inquirer": "^8.0.0",
-    "shelljs": "^0.8.5"
+    "shelljs": "^0.8.5",
+    "typescript": "^5.0.4"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.3",
+    "@types/node": "^18.15.13",
+    "@types/shelljs": "^0.8.12"
   }
 }

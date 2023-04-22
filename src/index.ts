@@ -1,14 +1,19 @@
 #!/usr/bin/env node
 
 // Los imports
-const fs = require('fs');
-const path = require('path');
-const inquirer = require('inquirer');
-const shell = require('shelljs');
-const chalk = require('chalk');
+import fs from "fs";
+import path from "path";
+import inquirer from "inquirer";
+import shell from "shelljs";
+import chalk from "chalk";
 
 // Obtener las opciones de los templates
-const TEMPLATE_OPTIONS = fs.readdirSync(path.join(__dirname, 'templates'));
+const TEMPLATE_OPTIONS = ["consume an api", "Generar una pantalla"];
+// const ARCHITECTURE = [
+//     { file: "data", file: [Object] },
+//     { file: "domain", file: [Object] },
+//     { file: "facade", file: [Object] }
+// ];
 
 const QUESTIONS = [
   {
@@ -17,34 +22,37 @@ const QUESTIONS = [
     message: "¿Qué tipo de proyecto quieres generar?",
     choices: TEMPLATE_OPTIONS,
   },
-  {
-    name: "proyecto",
-    type: "input",
-    message: "¿Cuál es el nombre del proyecto?",
-    validate: function (input) {
-      if (/^([a-z@]{1}[a-z\-\.\\\/0-9]{0,213})+$/.test(input)) {
-        return true;
-      }
-      return "El nombre del proyecto solo puede tener 214 carácteres y tiene que empezar en minúsculas o con una arroba";
-    },
-  },
+  //   {
+  //     name: "proyecto",
+  //     type: "input",
+  //     message: "¿Cuál es el nombre del proyecto?",
+  //     validate: function (input) {
+  //       if (/^([a-z@]{1}[a-z\-\.\\\/0-9]{0,213})+$/.test(input)) {
+  //         return true;
+  //       }
+  //       return "El nombre del proyecto solo puede tener 214 carácteres y tiene que empezar en minúsculas o con una arroba";
+  //     },
+  //   },
 ];
 
 const DIR_ACTUAL = process.cwd();
 inquirer.prompt(QUESTIONS).then((respuestas) => {
   const template = respuestas["template"];
-  const proyecto = respuestas["proyecto"];
 
-  const templatePath = path.join(__dirname, 'templates', template);
-  const pathTarget = path.join(DIR_ACTUAL, proyecto);
-  if (!createProject(pathTarget)) return;
+  //   const templatePath = path.join(__dirname, 'templates', template);
+  const pathClient = path.join(DIR_ACTUAL, "src-cliente");
+  console.log('--->',pathClient);
+//   console.log(hasAllFolders(pathClient));
+  //   if (!createProject(pathTarget)) return;
 
-  createDirectoriesFilesContent(templatePath, proyecto);
+  //   createDirectoriesFilesContent(templatePath, proyecto);
 
   //   postProccess(templatePath, pathTarget);
 });
 
-function createProject(projectPath) {
+function hasAllFolders(pathClient: any) {}
+
+function createProject(projectPath: any) {
   // Comprobar que no existe el directorio
   if (fs.existsSync(projectPath)) {
     console.log(
@@ -58,7 +66,7 @@ function createProject(projectPath) {
   return true;
 }
 
-function createDirectoriesFilesContent(templatePath, projectName) {
+function createDirectoriesFilesContent(templatePath: any, projectName: any) {
   const listFileDirectories = fs.readdirSync(templatePath);
 
   listFileDirectories.forEach((item) => {
@@ -70,7 +78,7 @@ function createDirectoriesFilesContent(templatePath, projectName) {
 
     if (stats.isFile()) {
       let contents = fs.readFileSync(originalPath, "utf-8");
-    //   contents = render(contents, { projectName });
+      //   contents = render(contents, { projectName });
       fs.writeFileSync(writePath, contents, "utf-8");
       // Información adicional
       const CREATE = chalk.green("CREATE ");
