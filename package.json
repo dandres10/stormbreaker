@@ -1,0 +1,28 @@
+{
+  "name": "stormbreaker-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dandres10/stormbreaker.git"
+  },
+  "author": "Marlon Andres Leon Leon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dandres10/stormbreaker/issues"
+  },
+  "bin": {
+    "cli-stormbreaker-generator": "./index.js"
+  },
+  "homepage": "https://github.com/dandres10/stormbreaker#readme",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "ejs": "^3.1.8",
+    "inquirer": "^8.0.0",
+    "shelljs": "^0.8.5"
+  }
+}
