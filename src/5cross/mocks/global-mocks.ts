@@ -10,9 +10,3 @@ export const QUESTIONS = [
     }
 ];
 
-export const ROUTES_ARCHITECTURE: string[] = [
-    '/data',
-    '/data/repositories',
-    '/domain',
-    '/facade'
-];

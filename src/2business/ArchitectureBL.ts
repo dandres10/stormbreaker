@@ -1,32 +1,47 @@
 
-
-
-
 import fs from "fs";
 import chalk from "chalk";
 import { QuestionCollection } from 'inquirer';
 import { IArchitectureAction, IArchitectureEntity } from "../4common-interfaces";
-import { QUESTIONS, ROUTES_ARCHITECTURE } from "../5cross";
+import { Injection, MessageTypeEnum, QUESTIONS, ROUTES_ARCHITECTURE } from "../5cross";
+import { Response } from '../5cross/interfaces/interfaces-global'
+import { CreateResponse } from "../5cross/class/create-response";
+import {CoreRoutesEnum, TypeFile} from "../5cross/enums/global-enum"
 
 export class ArchitectureBL implements IArchitectureAction {
 
+    private readonly _file = Injection.InjectionFile();
+
     constructor() { }
 
-    async BuildArchitecture(architectureEntity: IArchitectureEntity): Promise<boolean> {
+    async BuildArchitecture(architectureEntity: IArchitectureEntity): Promise<Response<boolean>> {
 
-        let hasAllFolders = false;
+        let hasAllFolders!: Response<boolean>;
 
-        this.HasAllFolders(architectureEntity.dirActualClient).then(res => hasAllFolders = res);
+        await this.HasAllFolders(architectureEntity.pathClient).then(res => hasAllFolders = res);
 
-        return true;
+
+        //crear un archivo dentro de una carpeta
+        this._file.CreateArchive(`${architectureEntity.pathClient}${CoreRoutesEnum.data}`,'IInterfaceDTO.ts', 'hola', TypeFile.TS);
+        //crear una carpeta
+        this._file.CreateNewFile(`${architectureEntity.pathClient}${CoreRoutesEnum.data}NuevaCarpeta`, 'NuevaCarpeta');
+
+        
+
+
+        return hasAllFolders;
+    }
+
+    private async CreateFile(architectureEntity: IArchitectureEntity) {
+        fs.appendFileSync('hola.ts', "import fs from 'fs'")
     }
 
 
-    async Questions(): Promise<QuestionCollection<any>> {
-        return QUESTIONS;
+    async Questions(): Promise<Response<QuestionCollection<any>>> {
+        return CreateResponse.SuccessfulResponse(QUESTIONS, MessageTypeEnum.NONE);
     }
 
-    async HasAllFolders(pathClient: string): Promise<boolean> {
+    async HasAllFolders(pathClient: string): Promise<Response<boolean>> {
 
         const validatingArchitecture = chalk.green("Validating architecture...");
         console.log(`${validatingArchitecture}`);
@@ -39,12 +54,12 @@ export class ArchitectureBL implements IArchitectureAction {
                 const error = chalk.red(`- [Error] The request was not completed`);
                 console.log(`${thereIsNoRoute}`);
                 console.log(`${error}`);
-                return false;
+                return CreateResponse.FailedResponse(false, MessageTypeEnum.NONE);
             }
         }
         const valid = chalk.green("Valid architecture");
         console.log(`${valid}`)
-        return true;
+        return CreateResponse.SuccessfulResponse(true, MessageTypeEnum.NONE);
     }
 
 }
