@@ -6,7 +6,7 @@ import { IArchitectureAction, IArchitectureEntity } from "../4common-interfaces"
 import { Injection, MessageTypeEnum, QUESTIONS, ROUTES_ARCHITECTURE } from "../5cross";
 import { Response } from '../5cross/interfaces/interfaces-global'
 import { CreateResponse } from "../5cross/class/create-response";
-import {CoreRoutesEnum, TypeFile} from "../5cross/enums/global-enum"
+import { CoreRoutesEnum, TypeFile } from "../5cross/enums/global-enum"
 
 export class ArchitectureBL implements IArchitectureAction {
 
@@ -17,23 +17,25 @@ export class ArchitectureBL implements IArchitectureAction {
     async BuildArchitecture(architectureEntity: IArchitectureEntity): Promise<Response<boolean>> {
 
         let hasAllFolders!: Response<boolean>;
+        const archivo = `${architectureEntity.pathClient}${CoreRoutesEnum.data}IInterfaceDTO.ts`;
 
         await this.HasAllFolders(architectureEntity.pathClient).then(res => hasAllFolders = res);
 
 
         //crear un archivo dentro de una carpeta
-        this._file.CreateArchive(`${architectureEntity.pathClient}${CoreRoutesEnum.data}`,'IInterfaceDTO.ts', 'hola', TypeFile.TS);
+        await this._file.CreateArchive(`${architectureEntity.pathClient}${CoreRoutesEnum.data}`, 'IInterfaceDTO', 'hola\ntu\ngenerador\nleyendo', TypeFile.TS);
         //crear una carpeta
-        this._file.CreateNewFile(`${architectureEntity.pathClient}${CoreRoutesEnum.data}NuevaCarpeta`, 'NuevaCarpeta');
-
-        
-
+        // this._file.CreateNewFile(`${architectureEntity.pathClient}${CoreRoutesEnum.data}NuevaCarpeta`, 'NuevaCarpeta');
+        //validar si es un archivo 
+        console.log((await this._file.IsFile(`${architectureEntity.pathClient}${CoreRoutesEnum.data}NuevaCarpeta`)).result);
+        //valida si es una carpeta
+        console.log((await this._file.IsDirectory(`${architectureEntity.pathClient}${CoreRoutesEnum.data}NuevaCarpeta`)).result);
+        //leer un archivo
+        console.log((await this._file.ReadAFile(archivo)).result);
+        //Cantidad de lineas en un archivo
+        console.log((await this._file.NumberOfLinesInTheFile(archivo)).result);
 
         return hasAllFolders;
-    }
-
-    private async CreateFile(architectureEntity: IArchitectureEntity) {
-        fs.appendFileSync('hola.ts', "import fs from 'fs'")
     }
 
 

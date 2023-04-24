@@ -60,6 +60,27 @@ export class File {
         });
     }
 
+    public async NumberOfLinesInTheFile(route: string): Promise<Response<number>> {
+        return new Promise((resolve) => {
+            const contenido = fs.readFileSync(route, 'utf8');
+            const lineas = contenido.split(/\r?\n/)?.length || -1;
+            fs.close;
+            return resolve(CreateResponse.SuccessfulResponse(lineas, MessageTypeEnum.NONE));
+        });
+    }
+
+    public async ReadAFile(route: string): Promise<Response<string[]>> {
+        return new Promise((resolve) => {
+            const contenido = fs.readFileSync(route, 'utf8').split(/\r?\n/);
+            fs.close;
+            return resolve(CreateResponse.SuccessfulResponse(contenido, MessageTypeEnum.NONE));
+        });
+    }
+
+
+
+
+
 
 
 
