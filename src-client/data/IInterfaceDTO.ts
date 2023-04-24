@@ -1,4 +1,4 @@
 hola
-tu
+      tu
 generador
 leyendo

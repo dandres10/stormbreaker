@@ -23,17 +23,24 @@ export class ArchitectureBL implements IArchitectureAction {
 
 
         //crear un archivo dentro de una carpeta
-        await this._file.CreateArchive(`${architectureEntity.pathClient}${CoreRoutesEnum.data}`, 'IInterfaceDTO', 'hola\ntu\ngenerador\nleyendo', TypeFile.TS);
+        await this._file.CreateArchive(`${architectureEntity.pathClient}${CoreRoutesEnum.data}`, 'IInterfaceDTO', 'hola\n      tu\ngenerador\nleyendo', TypeFile.TS);
         //crear una carpeta
-        // this._file.CreateNewFile(`${architectureEntity.pathClient}${CoreRoutesEnum.data}NuevaCarpeta`, 'NuevaCarpeta');
+        if (!(await this._file.ExistFile(`${architectureEntity.pathClient}${CoreRoutesEnum.data}NuevaCarpeta`)).result) {
+            this._file.CreateNewFile(`${architectureEntity.pathClient}${CoreRoutesEnum.data}NuevaCarpeta`, 'NuevaCarpeta');
+        }
         //validar si es un archivo 
         console.log((await this._file.IsFile(`${architectureEntity.pathClient}${CoreRoutesEnum.data}NuevaCarpeta`)).result);
         //valida si es una carpeta
         console.log((await this._file.IsDirectory(`${architectureEntity.pathClient}${CoreRoutesEnum.data}NuevaCarpeta`)).result);
-        //leer un archivo
-        console.log((await this._file.ReadAFile(archivo)).result);
         //Cantidad de lineas en un archivo
-        console.log((await this._file.NumberOfLinesInTheFile(archivo)).result);
+        let lines = (await this._file.NumberOfLinesInTheFile(archivo)).result || 0;
+        console.log(lines);
+        //leer un archivo
+        let read = (await this._file.ReadAFile(archivo)).result;
+        // console.log(read?.splice(0, lines - 1));
+        let union = await this._file.JoinText(read || [])
+        console.log(union);
+
 
         return hasAllFolders;
     }

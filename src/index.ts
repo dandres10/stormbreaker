@@ -16,7 +16,8 @@ _architectureFacade.Questions().then((questions: Response<QuestionCollection<any
   inquirer.prompt(questions?.result || []).then((response) => {
 
     const template = response["template"];
-    const pathClient = path.join(DIR_ACTUAL_CLIENT, "src-client");
+    // const pathClient = path.join(DIR_ACTUAL_CLIENT, "src-client");
+    const pathClient = path.join(DIR_ACTUAL_CLIENT);
 
     _architectureFacade.BuildArchitecture(
       {

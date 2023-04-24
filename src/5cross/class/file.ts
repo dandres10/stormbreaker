@@ -77,6 +77,20 @@ export class File {
         });
     }
 
+    public async JoinText(text: string[]): Promise<Response<string>> {
+        return new Promise((resolve) => {
+            const union = text?.join('\n').toString();
+            return resolve(CreateResponse.SuccessfulResponse(union, MessageTypeEnum.NONE));
+        });
+    }
+
+    public async JoinArrays(array1: string[], array2: string[]): Promise<Response<string[]>> {
+        return new Promise((resolve) => {
+            const arrayConcat = array1.concat(array2);
+            return resolve(CreateResponse.SuccessfulResponse(arrayConcat, MessageTypeEnum.NONE));
+        });
+    }
+
 
 
 
