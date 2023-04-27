@@ -15,13 +15,13 @@ export class File {
                 }
                 else {
                     console.log(`Archivo creado -> ${nameFile}`);
-                    resolve(CreateResponse.SuccessfulResponse(`Archivo creado - ${nameFile}`, MessageTypeEnum.NONE));
+                    resolve(CreateResponse.SuccessfulResponse(`Archivo creado - ${nameFile}`));
                 }
             });
             fs.close;
         });
     }
-    public async CreateNewFile(route: string, nameFile: string): Promise<Response<string>> {
+    public async CreateNewFolder(route: string, nameFile: string): Promise<Response<string>> {
         return new Promise((resolve, reject) => {
             fs.mkdir(`${route}`, (err) => {
                 if (err) {
@@ -29,18 +29,18 @@ export class File {
                 }
                 else {
                     console.log(`Carpeta creada -> ${nameFile}`);
-                    resolve(CreateResponse.SuccessfulResponse(`Carpeta creada - ${nameFile}`, MessageTypeEnum.NONE));
+                    resolve(CreateResponse.SuccessfulResponse(`Carpeta creada - ${nameFile}`));
                 }
             });
             fs.close;
         });
     }
 
-    public async ExistFile(route: string): Promise<Response<boolean>> {
+    public async ExistFileOrFolder(route: string): Promise<Response<boolean>> {
         return new Promise((resolve) => {
             let exist = fs.existsSync(route).valueOf();
             fs.close;
-            return resolve(CreateResponse.SuccessfulResponse(exist, MessageTypeEnum.NONE));
+            return resolve(CreateResponse.SuccessfulResponse(exist));
         });
     }
 
@@ -48,7 +48,7 @@ export class File {
         return new Promise((resolve) => {
             const stats = fs.statSync(route).isFile();
             fs.close;
-            return resolve(CreateResponse.SuccessfulResponse(stats, MessageTypeEnum.NONE));
+            return resolve(CreateResponse.SuccessfulResponse(stats));
         });
     }
 
@@ -56,7 +56,7 @@ export class File {
         return new Promise((resolve) => {
             const stats = fs.statSync(route).isDirectory();
             fs.close;
-            return resolve(CreateResponse.SuccessfulResponse(stats, MessageTypeEnum.NONE));
+            return resolve(CreateResponse.SuccessfulResponse(stats));
         });
     }
 
@@ -65,7 +65,7 @@ export class File {
             const contenido = fs.readFileSync(route, 'utf8');
             const lineas = contenido.split(/\r?\n/)?.length || -1;
             fs.close;
-            return resolve(CreateResponse.SuccessfulResponse(lineas, MessageTypeEnum.NONE));
+            return resolve(CreateResponse.SuccessfulResponse(lineas));
         });
     }
 
@@ -73,21 +73,21 @@ export class File {
         return new Promise((resolve) => {
             const contenido = fs.readFileSync(route, 'utf8').split(/\r?\n/);
             fs.close;
-            return resolve(CreateResponse.SuccessfulResponse(contenido, MessageTypeEnum.NONE));
+            return resolve(CreateResponse.SuccessfulResponse(contenido));
         });
     }
 
     public async JoinText(text: string[]): Promise<Response<string>> {
         return new Promise((resolve) => {
             const union = text?.join('\n').toString();
-            return resolve(CreateResponse.SuccessfulResponse(union, MessageTypeEnum.NONE));
+            return resolve(CreateResponse.SuccessfulResponse(union));
         });
     }
 
     public async JoinArrays(array1: string[], array2: string[]): Promise<Response<string[]>> {
         return new Promise((resolve) => {
             const arrayConcat = array1.concat(array2);
-            return resolve(CreateResponse.SuccessfulResponse(arrayConcat, MessageTypeEnum.NONE));
+            return resolve(CreateResponse.SuccessfulResponse(arrayConcat));
         });
     }
 

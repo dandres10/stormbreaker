@@ -1,4 +1,4 @@
-import { MessageTypeEnum, NotificationTypeEnum } from "../enums/global-enum"
+import { MessageTypeEnum, NotificationTypeEnum, TypeFile } from "../enums/global-enum"
 
 export interface Response<T> {
     result: T | null
@@ -7,5 +7,13 @@ export interface Response<T> {
     isValid: boolean
     messageType: MessageTypeEnum
 }
+
+export interface CreateFile {
+    route: string
+    nameFolder: string
+    typeFile: TypeFile
+    data: string;
+}
+
 
 

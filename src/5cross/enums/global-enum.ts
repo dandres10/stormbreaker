@@ -1,6 +1,6 @@
 export enum TEMPLATE_OPTIONS {
-    "consume_an_api" = "consume an api",
-    "Generar_una_pantalla" = "Generar una pantalla"
+    "new_pipe" = "Nuevo flujo",
+    "add_pipe" = "Añadir al flujo"
 }
 
 export enum CoreRoutesEnum {

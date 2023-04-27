@@ -1,4 +1,0 @@
-hola
-      tu
-generador
-leyendo
