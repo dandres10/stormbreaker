@@ -77,7 +77,12 @@ export class DataBL {
         await this.DataImplementationRespository().then((data) => {
             if (!data)
                 return CreateResponse.FailedResponse(false);
-            route5 = { route: `${architectureEntity.pathClient}/data/repositories/${architectureEntity.nameObject}/`, nameFolder: `${architectureEntity.nameObject}-implementation.respository`, typeFile: TypeFile.TS, data: data.result || '' };
+            route5 = {
+                route: `${architectureEntity.pathClient}/data/repositories/${architectureEntity.nameObject}/`,
+                nameFolder: `${architectureEntity.nameObject}-implementation.respository`,
+                typeFile: TypeFile.TS,
+                data: data.result || ''
+            };
         })
 
         const createFiles = [route5];
