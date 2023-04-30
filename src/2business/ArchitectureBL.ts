@@ -19,14 +19,13 @@ export class ArchitectureBL implements IArchitectureAction {
         let hasAllFolders!: Response<boolean>;
 
         await this.HasAllFolders(architectureEntity.pathClient).then(res => hasAllFolders = res);
-        if (hasAllFolders.result) {
+        if (hasAllFolders?.result) {
             await this._dataBL.BuildData(architectureEntity).then(res => {
                 if (!res.result) {
                     return CreateResponse.FailedResponse(false);
                 }
             });
         }
-
 
         return CreateResponse.SuccessfulResponse(true);
     }

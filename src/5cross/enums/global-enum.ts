@@ -43,3 +43,13 @@ export enum TypeCodeHttp {
     MODEL_VALIDATION = 400
 }
 
+export enum PrimitiveTypesEnum {
+    string = 'string',
+    null = 'null',
+    number = 'number',
+    date = 'Date',
+    corchetes = '[]',
+    llaves = '{}',
+    object = 'object'
+}
+
