@@ -69,6 +69,25 @@ export class File {
         });
     }
 
+    public async SearchInject(contenido: string[] , search: string, stop: string): Promise<Response<number>> {
+        return new Promise(async (resolve) => {
+            let count = 1;
+            let found = false;
+            let result = -1;
+            for await (const line of contenido) {
+                if (line?.includes(search)) {
+                    found = true;
+                }
+                if (found && line?.includes(stop)) {
+                    result = count;
+                    break;
+                }
+                count++;
+            }
+            return resolve(CreateResponse.SuccessfulResponse(result));
+        });
+    }
+
     public async ReadAFile(route: string): Promise<Response<string[]>> {
         return new Promise((resolve) => {
             const contenido = fs.readFileSync(route, 'utf8').split(/\r?\n/);
@@ -88,6 +107,13 @@ export class File {
         return new Promise((resolve) => {
             const arrayConcat = array1.concat(array2);
             return resolve(CreateResponse.SuccessfulResponse(arrayConcat));
+        });
+    }
+
+    public async ParseStringArray(data: string): Promise<Response<string[]>> {
+        return new Promise((resolve) => {
+            const response = data.split(/\r?\n/);
+            return resolve(CreateResponse.SuccessfulResponse(response));
         });
     }
 

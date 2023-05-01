@@ -82,6 +82,7 @@ export class DataBL {
         let route12!: CreateFile;
         let route13!: CreateFile;
         let route14!: CreateFile;
+        let route15!: CreateFile;
 
         await this.DataImplementationRespository(architectureEntity).then((data) => {
             if (!data)
@@ -201,8 +202,20 @@ export class DataBL {
             }
 
         });
+        await this.DataModule(architectureEntity).then((data) => {
+            if (!data)
+                return CreateResponse.FailedResponse(false);
+            route15 = {
+                route: `${architectureEntity.pathClient}/data/`,
+                nameFolder: `data.module`,
+                typeFile: TypeFile.TS,
+                data: data.result || ''
+            }
+        });
 
-        const createFiles = [route5, route6, route7, route8, route9, route10, route11, route12, route13, route14];
+
+
+        const createFiles = [route5, route6, route7, route8, route9, route10, route11, route12, route13, route14, route15];
 
         for await (const configuration of createFiles) {
             await this._file.CreateArchive(configuration.route, configuration.nameFolder, configuration.data, configuration.typeFile).then((res) => {
@@ -283,7 +296,8 @@ import {  } from "@management/domain/management";`;
     private async EffectsRedux(architectureEntity: IArchitectureEntity): Promise<Response<string>> {
         let { nameObject } = architectureEntity;
         let pascalCaseNameObject = this._accessCommon.PascalCase(nameObject || '');
-        let data: string = `import { Injectable } from "@angular/core";
+        let data: string = `import { actions${pascalCaseNameObject} } from './index';
+import { Injectable } from "@angular/core";
 import { mergeMap, map } from 'rxjs/operators';
 import { actions${pascalCaseNameObject} } from '@management/data/management';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
@@ -304,8 +318,8 @@ export class ${pascalCaseNameObject}Effects {
         let { nameObject } = architectureEntity;
         let pascalCaseNameObject = this._accessCommon.PascalCase(nameObject || '');
         let camelCaseNameObject = this._accessCommon.CamelCase(nameObject || '');
-        let data: string = `import { createReducer, on } from '@ngrx/store';
-import { actions${pascalCaseNameObject} } from '@management/data/management';
+        let data: string = `import { actions${pascalCaseNameObject} } from './index';
+import { createReducer, on } from '@ngrx/store';
 import {  } from "@management/domain/management";
 
 export const ${nameObject?.toUpperCase()}_KEY = '${camelCaseNameObject}'
@@ -329,7 +343,7 @@ export function ${pascalCaseNameObject}Reducer(state: ${pascalCaseNameObject}Mod
         let { nameObject } = architectureEntity;
         let pascalCaseNameObject = this._accessCommon.PascalCase(nameObject || '');
         let camelCaseNameObject = this._accessCommon.CamelCase(nameObject || '');
-        let data: string = `import { reducer${pascalCaseNameObject} } from '@management/data/management';
+        let data: string = `import { reducer${pascalCaseNameObject} } from './index';
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 
 export const get${pascalCaseNameObject} = createFeatureSelector<reducer${pascalCaseNameObject}.${pascalCaseNameObject}Model>(reducer${pascalCaseNameObject}.${nameObject?.toUpperCase()}_KEY);`;
@@ -356,8 +370,7 @@ export * as selectors${pascalCaseNameObject}  from './${nameObject}.selectors';`
         let camelCaseNameObject = this._accessCommon.CamelCase(nameObject || '');
         let data: string = `export * from './entities/${nameObject}-entity';
 export * from './${nameObject}-implementation.repository';
-export * from './mappers/${nameObject}.mapper';
-export * from './redux/index';`;
+export * from './mappers/${nameObject}.mapper';`;
 
         return CreateResponse.SuccessfulResponse(data);
     }
@@ -376,7 +389,7 @@ export * from './redux/index';`;
             });
 
         for await (const line of dataFile) {
-            existExport = line?.includes(`${nameObject}/index`);
+            existExport = line?.includes(`repositories/${nameObject}/index`);
             if (existExport) {
                 break;
             }
@@ -390,6 +403,338 @@ export * from './redux/index';`;
             if (res?.result)
                 data = res.result
         });
+
+        return CreateResponse.SuccessfulResponse(data);
+    }
+
+    private async DataModule(architectureEntity: IArchitectureEntity): Promise<Response<string>> {
+        let data: string = ``;
+
+        await this._file.ExistFileOrFolder(`${architectureEntity.pathClient}/data/data.module.ts`)
+            .then(async (res) => {
+
+                if (res?.result) {
+                    await this.ModuleExists(architectureEntity).then((res) => {
+                        if (res?.result) {
+                            data = res?.result;
+                        }
+                    })
+                    return
+                }
+
+                await this.CreateModule(architectureEntity).then((res) => {
+                    if (res?.result) {
+                        data = res?.result;
+                    }
+                })
+
+            })
+
+        return CreateResponse.SuccessfulResponse(data);
+    }
+
+    private async ModuleExists(architectureEntity: IArchitectureEntity): Promise<Response<string>> {
+        let { nameObject } = architectureEntity;
+        let pascalCaseNameObject = this._accessCommon.PascalCase(nameObject || '');
+        let camelCaseNameObject = this._accessCommon.CamelCase(nameObject || '');
+        let data: string = '';
+        let dataFile: string[] = [];
+        let existFacadeFactory: boolean = false;
+        let route = `${architectureEntity.pathClient}/data/data.module.ts`;
+
+
+        await this._file.ReadAFile(route)
+            .then(async (res) => {
+                if (res?.result?.length) {
+                    dataFile = res.result;
+                    await this._file.JoinText(dataFile).then((res) => { data = res?.result || '' });
+                }
+            });
+
+        for await (const line of dataFile) {
+            existFacadeFactory = line?.includes(`const ${pascalCaseNameObject}FacadeFactory`);
+            if (existFacadeFactory) {
+                break;
+            }
+        }
+
+        if (!existFacadeFactory) {
+            await this.BuildInjectFacadeFactory(dataFile, architectureEntity).then(async (res) => {
+                if (res?.result) {
+                    data = res.result;
+                    await this._file.ParseStringArray(data).then((res) => {
+                        if (res?.result?.length)
+                            dataFile = res.result;
+                    })
+
+
+                }
+            })
+
+            await this.BuildInjectFacadeFactoryProviders(dataFile, architectureEntity).then(async (res) => {
+                if (res?.result) {
+                    data = res.result;
+                    await this._file.ParseStringArray(data).then((res) => {
+                        if (res?.result?.length)
+                            dataFile = res.result;
+                    })
+                }
+            })
+
+            await this.BuildInjectFacadeFactoryStoreModule(dataFile, architectureEntity).then(async (res) => {
+                if (res?.result) {
+                    data = res.result;
+                    await this._file.ParseStringArray(data).then((res) => {
+                        if (res?.result?.length)
+                            dataFile = res.result;
+                    })
+                }
+            })
+
+            await this.BuildInjectFacadeFactoryEffectsModule(dataFile, architectureEntity).then(async (res) => {
+                if (res?.result) {
+                    data = res.result;
+                    await this._file.ParseStringArray(data).then((res) => {
+                        if (res?.result?.length)
+                            dataFile = res.result;
+                    })
+                }
+            })
+
+            await this.BuildInjectImports(dataFile, architectureEntity).then(async (res) => {
+                if (res?.result) {
+                    data = res.result;
+                    await this._file.ParseStringArray(data).then((res) => {
+                        if (res?.result?.length)
+                            dataFile = res.result;
+                    })
+                }
+            })
+
+
+        }
+
+        return CreateResponse.SuccessfulResponse(data);
+    }
+
+
+    private async BuildInjectFacadeFactory(dataFile: string[], architectureEntity: IArchitectureEntity): Promise<Response<string>> {
+        let { nameObject } = architectureEntity;
+        let pascalCaseNameObject = this._accessCommon.PascalCase(nameObject || '');
+        let camelCaseNameObject = this._accessCommon.CamelCase(nameObject || '');
+        let data = '';
+        let pointInyection = -1;
+
+        await this._file.SearchInject(dataFile, 'const', '}').then((res) => {
+            if (res?.result && res?.result != -1) {
+                pointInyection = res?.result;
+            }
+        })
+
+
+        let head = dataFile.slice(0, pointInyection);
+        head.push(`\nconst ${pascalCaseNameObject}FacadeFactory =
+(${nameObject}Repo: ${pascalCaseNameObject}Repository) => ${pascalCaseNameObject}Facade.getInstance(${nameObject}Repo);
+export const ${pascalCaseNameObject}FacadeProvider = {
+    provide: ${pascalCaseNameObject}Facade,
+    useFactory: ${pascalCaseNameObject}FacadeFactory,
+    deps: [${pascalCaseNameObject}Repository]
+};\n`);
+
+        let end = dataFile.slice(pointInyection + 1, dataFile.length);
+
+        await this._file.JoinArrays(head, end).then(async (res) => {
+            if (res?.result?.length) {
+                await this._file.JoinText(res.result).then((res) => {
+                    if (res?.result)
+                        data = res.result;
+                });
+            }
+        });
+
+        return CreateResponse.SuccessfulResponse(data);
+    }
+
+    private async BuildInjectFacadeFactoryProviders(dataFile: string[], architectureEntity: IArchitectureEntity): Promise<Response<string>> {
+        let { nameObject } = architectureEntity;
+        let pascalCaseNameObject = this._accessCommon.PascalCase(nameObject || '');
+        let camelCaseNameObject = this._accessCommon.CamelCase(nameObject || '');
+        let data = '';
+        let pointInyection = -1;
+
+        await this._file.SearchInject(dataFile, 'const PROVIDERS = [', '}').then((res) => {
+            if (res?.result && res?.result != -1) {
+                pointInyection = res?.result;
+            }
+        })
+
+
+        let head = dataFile.slice(0, pointInyection);
+        head.push(`    ${pascalCaseNameObject}FacadeProvider,
+    { provide: ${pascalCaseNameObject}Repository, useClass: ${pascalCaseNameObject}ImplementationRepository },\n]`);
+
+        let end = dataFile.slice(pointInyection + 1, dataFile.length);
+
+        await this._file.JoinArrays(head, end).then(async (res) => {
+            if (res?.result?.length) {
+                await this._file.JoinText(res.result).then((res) => {
+                    if (res?.result)
+                        data = res.result;
+                });
+            }
+        });
+
+        return CreateResponse.SuccessfulResponse(data);
+    }
+
+    private async BuildInjectFacadeFactoryStoreModule(dataFile: string[], architectureEntity: IArchitectureEntity): Promise<Response<string>> {
+        let { nameObject } = architectureEntity;
+        let pascalCaseNameObject = this._accessCommon.PascalCase(nameObject || '');
+        let camelCaseNameObject = this._accessCommon.CamelCase(nameObject || '');
+        let data = '';
+        let pointInyection = -1;
+
+        await this._file.SearchInject(dataFile, 'const IMPORTS = [', ']').then((res) => {
+            if (res?.result && res?.result != -1) {
+                pointInyection = res?.result;
+            }
+        })
+
+
+        let head = dataFile.slice(0, pointInyection);
+        head.push(`    StoreModule.forFeature(
+        reducer${pascalCaseNameObject}.${nameObject?.toUpperCase()}_KEY,
+        reducer${pascalCaseNameObject}.${pascalCaseNameObject}Reducer\n    ),`);
+
+        let end = dataFile.slice(pointInyection, dataFile.length);
+
+        await this._file.JoinArrays(head, end).then(async (res) => {
+            if (res?.result?.length) {
+                await this._file.JoinText(res.result).then((res) => {
+                    if (res?.result)
+                        data = res.result;
+                });
+            }
+        });
+
+        return CreateResponse.SuccessfulResponse(data);
+    }
+
+    private async BuildInjectFacadeFactoryEffectsModule(dataFile: string[], architectureEntity: IArchitectureEntity): Promise<Response<string>> {
+        let { nameObject } = architectureEntity;
+        let pascalCaseNameObject = this._accessCommon.PascalCase(nameObject || '');
+        let camelCaseNameObject = this._accessCommon.CamelCase(nameObject || '');
+        let data = '';
+        let pointInyection = -1;
+
+        await this._file.SearchInject(dataFile, 'EffectsModule.', ',').then((res) => {
+            if (res?.result && res?.result != -1) {
+                pointInyection = res?.result;
+            }
+        })
+
+
+        let head = dataFile.slice(0, pointInyection);
+        head.push(`        ${pascalCaseNameObject}Effects,`);
+
+        let end = dataFile.slice(pointInyection, dataFile.length);
+
+        await this._file.JoinArrays(head, end).then(async (res) => {
+            if (res?.result?.length) {
+                await this._file.JoinText(res.result).then((res) => {
+                    if (res?.result)
+                        data = res.result;
+                });
+            }
+        });
+
+        return CreateResponse.SuccessfulResponse(data);
+    }
+
+    private async BuildInjectImports(dataFile: string[], architectureEntity: IArchitectureEntity): Promise<Response<string>> {
+        let { nameObject } = architectureEntity;
+        let pascalCaseNameObject = this._accessCommon.PascalCase(nameObject || '');
+        let camelCaseNameObject = this._accessCommon.CamelCase(nameObject || '');
+        let data = '';
+        let pointInyection = -1;
+
+        await this._file.SearchInject(dataFile, '//Imports Generator', ' ').then((res) => {
+            if (res?.result && res?.result != -1) {
+                pointInyection = res?.result;
+            }
+        })
+
+
+        let head = dataFile.slice(0, pointInyection);
+        head.push(`import { ${pascalCaseNameObject}Repository } from '@management/domain/management';
+import { ${pascalCaseNameObject}ImplementationRepository } from '@management/data/management';
+import { ${pascalCaseNameObject}Facade } from '@management/facade/management';
+import { ${pascalCaseNameObject}Effects, reducer${pascalCaseNameObject} } from './repositories/${nameObject}/redux/index';\n`);
+
+        let end = dataFile.slice(pointInyection, dataFile.length);
+
+        await this._file.JoinArrays(head, end).then(async (res) => {
+            if (res?.result?.length) {
+                await this._file.JoinText(res.result).then((res) => {
+                    if (res?.result)
+                        data = res.result;
+                });
+            }
+        });
+
+        return CreateResponse.SuccessfulResponse(data);
+    }
+
+    private async CreateModule(architectureEntity: IArchitectureEntity): Promise<Response<string>> {
+        let { nameObject } = architectureEntity;
+        let pascalCaseNameObject = this._accessCommon.PascalCase(nameObject || '');
+        let camelCaseNameObject = this._accessCommon.CamelCase(nameObject || '');
+
+        let data = `import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { Store, StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+
+import { ${pascalCaseNameObject}Repository } from '@management/domain/management';
+import { ${pascalCaseNameObject}ImplementationRepository } from '@management/data/management';
+import { ${pascalCaseNameObject}Facade } from '@management/facade/management';
+import { ${pascalCaseNameObject}Effects, reducer${pascalCaseNameObject} } from './repositories/${nameObject}/redux/index';
+
+
+
+const ${pascalCaseNameObject}FacadeFactory =
+    (${nameObject}Repo: ${pascalCaseNameObject}Repository) => ${pascalCaseNameObject}Facade.getInstance(${nameObject}Repo);
+export const ${pascalCaseNameObject}FacadeProvider = {
+    provide: ${pascalCaseNameObject}Facade,
+    useFactory: ${pascalCaseNameObject}FacadeFactory,
+    deps: [${pascalCaseNameObject}Repository]
+};
+
+
+
+const PROVIDERS = [
+    ${pascalCaseNameObject}FacadeProvider,
+    { provide: ${pascalCaseNameObject}Repository, useClass: ${pascalCaseNameObject}ImplementationRepository }
+];
+
+const IMPORTS = [
+    CommonModule,
+    HttpClientModule,
+    StoreModule.forFeature(
+        reducer${pascalCaseNameObject}.${nameObject?.toUpperCase()}_KEY,
+        reducer${pascalCaseNameObject}.${pascalCaseNameObject}Reducer
+    ),
+    EffectsModule.forFeature([
+        ${pascalCaseNameObject}Effects
+    ]),
+]
+
+@NgModule({
+    providers: PROVIDERS,
+    imports: IMPORTS
+})
+export class DataModule { }`;
 
         return CreateResponse.SuccessfulResponse(data);
     }
@@ -441,11 +786,14 @@ import {
 
 import {
     I${pascalCaseNameObject}Entity,
-    ${pascalCaseNameObject}Mapper,
-    reducer${pascalCaseNameObject},
-    actions${pascalCaseNameObject},
-    selectors${pascalCaseNameObject}
+    ${pascalCaseNameObject}Mapper
 } from '@management/data/management';
+
+import {
+    actions${pascalCaseNameObject}, 
+    reducer${pascalCaseNameObject},
+    selectors${pascalCaseNameObject}
+} from './redux';
 
 
 @Injectable({

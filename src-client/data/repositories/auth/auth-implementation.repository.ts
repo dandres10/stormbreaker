@@ -19,11 +19,14 @@ import {
 
 import {
     IAuthEntity,
-    AuthMapper,
-    reducerAuth,
-    actionsAuth,
-    selectorsAuth
+    AuthMapper
 } from '@management/data/management';
+
+import {
+    actionsAuth, 
+    reducerAuth,
+    selectorsAuth
+} from './redux';
 
 
 @Injectable({

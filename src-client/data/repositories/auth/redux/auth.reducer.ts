@@ -1,5 +1,5 @@
+import { actionsAuth } from './index';
 import { createReducer, on } from '@ngrx/store';
-import { actionsAuth } from '@management/data/management';
 import {  } from "@management/domain/management";
 
 export const AUTH_KEY = 'auth'
