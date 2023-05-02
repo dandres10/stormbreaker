@@ -4,15 +4,16 @@ import { IArchitectureEntity } from "../../4common-interfaces";
 import { Injection, TypeFile } from "../../5cross";
 import { CreateFile, Response } from '../../5cross/interfaces/interfaces-global';
 import { CreateResponse } from "../../5cross/class/create-response";
+import { ILayerAction } from "../../4common-interfaces/action/ILayerAction";
 
-export class DataBL {
+export class DataBL extends ILayerAction {
 
     private readonly _file = Injection.InjectionFile();
     private readonly _accessCommon = Injection.InjectionAccessCommon();
 
-    constructor() { }
+    constructor() { super(); }
 
-    async BuildData(architectureEntity: IArchitectureEntity): Promise<Response<boolean>> {
+    async Build(architectureEntity: IArchitectureEntity): Promise<Response<boolean>> {
 
         let responseBuildRepositories!: Response<boolean>;
 
@@ -33,11 +34,10 @@ export class DataBL {
             });
         }
 
-
         return CreateResponse.SuccessfulResponse(true);
     }
 
-    private async ExistBase(architectureEntity: IArchitectureEntity): Promise<Response<boolean>> {
+    async ExistBase(architectureEntity: IArchitectureEntity): Promise<Response<boolean>> {
 
         let validRoute = `${architectureEntity.pathClient}/data/repositories/${architectureEntity.nameObject}`;
         let responseExistFileOrFolder!: Response<boolean>;
@@ -52,7 +52,7 @@ export class DataBL {
 
     }
 
-    private async CreateBase(architectureEntity: IArchitectureEntity): Promise<Response<boolean>> {
+    async CreateBase(architectureEntity: IArchitectureEntity): Promise<Response<boolean>> {
 
         await this.CreateFolders(architectureEntity).then((res) => {
             if (!res.result) {
@@ -69,8 +69,7 @@ export class DataBL {
         return CreateResponse.SuccessfulResponse(true);
     }
 
-
-    private async CreateFiles(architectureEntity: IArchitectureEntity): Promise<Response<boolean>> {
+    async CreateFiles(architectureEntity: IArchitectureEntity): Promise<Response<boolean>> {
 
         let route5!: CreateFile;
         let route6!: CreateFile;
@@ -834,7 +833,7 @@ export class ${pascalCaseNameObject}ImplementationRepository extends ${pascalCas
         return CreateResponse.SuccessfulResponse(data);
     }
 
-    private async CreateFolders(architectureEntity: IArchitectureEntity): Promise<Response<boolean>> {
+    async CreateFolders(architectureEntity: IArchitectureEntity): Promise<Response<boolean>> {
         const route1 = { route: `${architectureEntity.pathClient}/data/repositories/${architectureEntity.nameObject}`, nameFolder: `${architectureEntity.nameObject}` };
         const route2 = { route: `${architectureEntity.pathClient}/data/repositories/${architectureEntity.nameObject}/entities`, nameFolder: 'entities' };
         const route3 = { route: `${architectureEntity.pathClient}/data/repositories/${architectureEntity.nameObject}/mappers`, nameFolder: 'mappers' };
