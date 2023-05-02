@@ -1,4 +1,4 @@
-import { Response } from '../../5cross/interfaces/interfaces-global'
+import { Response } from '../../4cross/interfaces/interfaces-global'
 import { IArchitectureEntity } from '../entity';
 
 export abstract class  ILayerAction {

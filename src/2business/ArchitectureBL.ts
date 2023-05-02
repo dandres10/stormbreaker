@@ -2,10 +2,10 @@
 import fs from "fs";
 import chalk from "chalk";
 import { QuestionCollection } from 'inquirer';
-import { IArchitectureAction, IArchitectureEntity } from "../4common-interfaces";
-import { Injection, QUESTIONS, ROUTES_ARCHITECTURE } from "../5cross";
-import { Response } from '../5cross/interfaces/interfaces-global'
-import { CreateResponse } from "../5cross/class/create-response";
+import { IArchitectureAction, IArchitectureEntity } from "../3common-interfaces";
+import { Injection, QUESTIONS, ROUTES_ARCHITECTURE } from "../4cross";
+import { Response } from '../4cross/interfaces/interfaces-global'
+import { CreateResponse } from "../4cross/class/create-response";
 
 export class ArchitectureBL implements IArchitectureAction {
 

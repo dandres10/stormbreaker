@@ -2,9 +2,9 @@
 
 
 import { QuestionCollection } from "inquirer";
-import { IArchitectureEntity, IArchitectureFacade } from "../4common-interfaces";
-import { Injection } from "../5cross";
-import { Response } from '../5cross/interfaces/interfaces-global';
+import { IArchitectureEntity, IArchitectureFacade } from "../3common-interfaces";
+import { Injection } from "../4cross";
+import { Response } from '../4cross/interfaces/interfaces-global';
 
 
 export class ArchitectureFacade implements IArchitectureFacade {

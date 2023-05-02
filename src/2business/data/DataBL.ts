@@ -1,10 +1,10 @@
 
 
-import { IArchitectureEntity } from "../../4common-interfaces";
-import { Injection, TypeFile } from "../../5cross";
-import { CreateFile, Response } from '../../5cross/interfaces/interfaces-global';
-import { CreateResponse } from "../../5cross/class/create-response";
-import { ILayerAction } from "../../4common-interfaces/action/ILayerAction";
+import { IArchitectureEntity } from "../../3common-interfaces";
+import { Injection, TypeFile } from "../../4cross";
+import { CreateFile, Response } from '../../4cross/interfaces/interfaces-global';
+import { CreateResponse } from "../../4cross/class/create-response";
+import { ILayerAction } from "../../3common-interfaces/action/ILayerAction";
 
 export class DataBL extends ILayerAction {
 

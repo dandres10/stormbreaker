@@ -4,9 +4,9 @@
 import path from "path";
 import inquirer, { QuestionCollection } from "inquirer";
 import shell from "shelljs";
-import { Injection, TEMPLATE_OPTIONS } from "./5cross";
-import { Response } from './5cross/interfaces/interfaces-global';
-import { IArchitectureEntity } from "./4common-interfaces";
+import { Injection, TEMPLATE_OPTIONS } from "./4cross";
+import { Response } from './4cross/interfaces/interfaces-global';
+import { IArchitectureEntity } from "./3common-interfaces";
 
 
 const DIR_ACTUAL_CLIENT = process.cwd();

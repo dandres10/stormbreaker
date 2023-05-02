@@ -1,6 +1,6 @@
 import { QuestionCollection } from "inquirer"
 import { IArchitectureEntity } from "../entity"
-import { Response } from '../../5cross/interfaces/interfaces-global'
+import { Response } from '../../4cross/interfaces/interfaces-global'
 
 export interface IArchitectureAction {
   HasAllFolders(pathClient: string): Promise<Response<boolean>>

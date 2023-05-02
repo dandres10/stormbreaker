@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { PrimitiveTypesEnum } from "../enums/global-enum";
 import { CreateResponse } from "./create-response";
-import { Response } from '../../5cross/interfaces/interfaces-global';
+import { Response } from '../../4cross/interfaces/interfaces-global';
 
 export class AccessCommon {
 
