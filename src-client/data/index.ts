@@ -11,4 +11,4 @@ export * from './repositories/campus/entities/campus-entity';
 export * from './repositories/rol/entities/rol-entity';
 export * from './repositories/permission/entities/permission-entity';
 
-export * from './repositories/auth/index';
+
