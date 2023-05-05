@@ -15,9 +15,6 @@ export interface CreateFile {
     data: string;
 }
 
-// export interface ObjectSearchInject {
-    
-// }
 
 
 

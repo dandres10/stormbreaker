@@ -1,5 +1,6 @@
-import { ArchitectureFacade } from "../../1facade"
-import { ArchitectureBL } from "../../2business"
+
+import { ArchitectureFacade } from "../../1facade/ArchitectureFacade"
+import { ArchitectureBL } from "../../2business/ArchitectureBL"
 import { DataBL } from "../../2business/data/DataBL"
 import { AccessCommon } from "../class/access-common"
 import { File } from "../class/file"

@@ -8,6 +8,10 @@ import { EffectsModule } from '@ngrx/effects';
 
 
 
+
+
+
+
 const XXXXXXXFacadeFactory =
     (authRepo: AuthRepository) => AuthFacade.getInstance(authRepo);
 export const AuthFacadeProvider = {
@@ -15,7 +19,6 @@ export const AuthFacadeProvider = {
     useFactory: AuthFacadeFactory,
     deps: [AuthRepository]
 };
-
 
 
 const PROVIDERS = [
