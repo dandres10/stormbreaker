@@ -24,11 +24,11 @@ export class ArchitectureBL implements IArchitectureAction {
 
         await this.HasAllFolders(architectureEntity.pathClient).then(res => hasAllFolders = res);
         if (hasAllFolders?.result) {
-            await this._dataBL.Build(architectureEntity).then(res => {
-                if (!res.result) {
-                    return CreateResponse.FailedResponse(false);
-                }
-            });
+            // await this._dataBL.Build(architectureEntity).then(res => {
+            //     if (!res.result) {
+            //         return CreateResponse.FailedResponse(false);
+            //     }
+            // });
 
             await this._domainBL.Build(architectureEntity).then(res => {
                 if (!res.result) {

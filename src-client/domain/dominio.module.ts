@@ -8,7 +8,7 @@ import { InvoiceFacade } from '@omni-platform-infraestructure';
 import { IInvoiceService } from './abstract/invoice/IInvoiceService';
 
 const InvoiceFacadeFactory = (invoiceService: InvoiceApiService) =>
-  InvoiceFacade.getInstance(invoiceService);
+InvoiceFacade.getInstance(invoiceService);
 
 export const InvoiceFacadeProvider = {
   provide: InvoiceFacade,
@@ -17,7 +17,7 @@ export const InvoiceFacadeProvider = {
 };
 
 const PROVIDERS = [
-  InvoiceFacadeProvider,
+    InvoiceFacadeProvider,
   { provide: IInvoiceService, useClass: InvoiceApiService }
 ];
 

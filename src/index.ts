@@ -32,7 +32,7 @@ _architectureFacade.Questions().then((questions: Response<QuestionCollection<any
       newPipe: true,
       pathClient: pathClient,
       nameObject: 'invoice',
-      nameMethod: 'getInvoice',
+      nameMethod: 'get_invoice',
       request: [
         'params:string',
       ],
@@ -50,7 +50,8 @@ _architectureFacade.Questions().then((questions: Response<QuestionCollection<any
         'order: number',
         'marginLeft?: number',
         'index?: number',
-      ],
+      ], 
+      typeResponse: 'array',
       url: 'invoice/singIn'
     }
     _architectureFacade.BuildArchitecture(initData).then(() => { });

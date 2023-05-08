@@ -7,7 +7,7 @@ export class File {
 
     constructor() { }
 
-    public async CreateArchive(route: string, nameFile: string, data: string, typeFile: TypeFile): Promise<Response<string>> {
+    public async CreateFile(route: string, nameFile: string, data: string, typeFile: TypeFile): Promise<Response<string>> {
         return new Promise((resolve, reject) => {
             fs.writeFile(`${route}${nameFile}${typeFile}`, data, (err) => {
                 if (err) {

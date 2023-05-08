@@ -43,9 +43,9 @@ export class AccessCommon {
         return `${adjustedFormat.substring(0, 1).toLowerCase()}${adjustedFormat.substring(1, adjustedFormat.length)}`;
     }
 
-    async BuildInterface(response: string[], nameObject: string): Promise<Response<string>> {
+    async BuildInterface(response: string[], nameObject: string, typeObject: string): Promise<Response<string>> {
 
-        let data: string = `export interface I${this.PascalCase(nameObject)}Entity {\n`;
+        let data: string = `export interface I${this.PascalCase(nameObject)}${typeObject} {\n`;
 
         for (const item of response) {
             if (item?.split(':')?.length) {

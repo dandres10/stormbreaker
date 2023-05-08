@@ -217,7 +217,7 @@ export class DataExampleBL extends ILayerAction {
         const createFiles = [route5, route6, route7, route8, route9, route10, route11, route12, route13, route14, route15];
 
         for await (const configuration of createFiles) {
-            await this._file.CreateArchive(configuration.route, configuration.nameFolder, configuration.data, configuration.typeFile).then((res) => {
+            await this._file.CreateFile(configuration.route, configuration.nameFolder, configuration.data, configuration.typeFile).then((res) => {
                 if (!res.result) {
                     this._accessCommon.messageError(`Error generating the file of the data layer -> ${configuration.route}`);
                     return CreateResponse.FailedResponse(false);
@@ -234,7 +234,7 @@ export class DataExampleBL extends ILayerAction {
         let data: string = '\n';
 
         await this._accessCommon.BuildImportsInterface(response || []).then(res => data += res.result);
-        await this._accessCommon.BuildInterface(response || [], nameObject || '').then(res => data += res.result);
+        // await this._accessCommon.BuildInterface(response || [], nameObject || '').then(res => data += res.result);
 
         return CreateResponse.SuccessfulResponse(data);
     }

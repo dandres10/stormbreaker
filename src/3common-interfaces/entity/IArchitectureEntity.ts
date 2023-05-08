@@ -7,4 +7,5 @@ export interface IArchitectureEntity {
     newPipe?: boolean
     nameObject?: string
     nameMethod?: string
+    typeResponse?: string
 }
