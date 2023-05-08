@@ -31,24 +31,28 @@ _architectureFacade.Questions().then((questions: Response<QuestionCollection<any
     const initData: IArchitectureEntity = {
       newPipe: true,
       pathClient: pathClient,
-      nameObject: 'auth',
-      nameMethod: 'sing_in',
+      nameObject: 'invoice',
+      nameMethod: 'getInvoice',
       request: [
-        'email:string',
-        'password:string'
+        'params:string',
       ],
       response: [
-        'person:IPersonEntity|null',
-        'language:ILanguageEntity|null',
-        'companies:ICompanyEntity[]|null',
-        'currency:ICurrencyEntity|null',
-        'token:string|null',
-        ''
+        'id:number',
+        'options:string[]',
+        'country:string',
+        'operation_type:string',
+        'name:string',
+        'description:string',
+        'image:string',
+        'image_icon: string',
+        'link_show_more: string',
+        'active: boolean',
+        'order: number',
+        'marginLeft?: number',
+        'index?: number',
       ],
-      url: 'auth/singIn'
+      url: 'invoice/singIn'
     }
-
-
     _architectureFacade.BuildArchitecture(initData).then(() => { });
 
   });

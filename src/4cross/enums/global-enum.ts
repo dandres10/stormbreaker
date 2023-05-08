@@ -4,18 +4,39 @@ export enum TEMPLATE_OPTIONS {
 }
 
 export enum CoreRoutesEnum {
-    data = '/data/',
-    dataRepositories = '/data/repositories',
+    data = '/data',
+    dataAdapters = '/data/adapters',
+    dataApiService = '/data/api-service',
+    dataIndex = '/data/index.ts',
     domain = '/domain',
+    domainAbstract = '/domain/abstract',
+    domainAbstractIndex = '/domain/abstract/index.ts',
+    domainhelpers = '/domain/helpers',
+    domainInterfaces = '/domain/interfaces',
+    domainUseCases = '/domain/use-cases',
+    domainModule = '/domain/dominio.module.ts',
+    domainIndex = '/domain/index.ts',
     facade = '/facade',
-
+    infraestructure = '/infraestructure',
+    infraestructureIndex = '/infraestructure/index.ts'
 }
 
 export const ROUTES_ARCHITECTURE: string[] = [
     CoreRoutesEnum.data,
-    CoreRoutesEnum.dataRepositories,
+    CoreRoutesEnum.dataAdapters,
+    CoreRoutesEnum.dataApiService,
+    CoreRoutesEnum.dataIndex,
     CoreRoutesEnum.domain,
-    CoreRoutesEnum.facade
+    CoreRoutesEnum.domainAbstract,
+    CoreRoutesEnum.domainAbstractIndex,
+    CoreRoutesEnum.domainhelpers,
+    CoreRoutesEnum.domainInterfaces,
+    CoreRoutesEnum.domainUseCases,
+    CoreRoutesEnum.domainModule,
+    CoreRoutesEnum.domainIndex,
+    CoreRoutesEnum.facade,
+    CoreRoutesEnum.infraestructure,
+    CoreRoutesEnum.infraestructureIndex
 ];
 
 

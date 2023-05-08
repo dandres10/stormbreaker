@@ -3,7 +3,7 @@ import { Injection } from "../../4cross";
 import { CreateResponse } from "../../4cross/class/create-response";
 import { Response } from "../../4cross/interfaces/interfaces-global";
 
-export class DataBL extends ILayerAction {
+export class DomainBL extends ILayerAction {
 
     private readonly _file = Injection.InjectionFile();
     private readonly _accessCommon = Injection.InjectionAccessCommon();

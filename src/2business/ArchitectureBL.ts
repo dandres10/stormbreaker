@@ -10,7 +10,11 @@ import { CreateResponse } from "../4cross/class/create-response";
 export class ArchitectureBL implements IArchitectureAction {
 
     private readonly _file = Injection.InjectionFile();
+
     private readonly _dataBL = Injection.InjectionDataBL();
+    private readonly _domainBL = Injection.InjectionDomainBL();
+    private readonly _facadeBL = Injection.InjectionFacadeBL();
+    private readonly _infraestructureBL = Injection.InjectionInfraestructureBL();
 
     constructor() { }
 
@@ -21,6 +25,12 @@ export class ArchitectureBL implements IArchitectureAction {
         await this.HasAllFolders(architectureEntity.pathClient).then(res => hasAllFolders = res);
         if (hasAllFolders?.result) {
             await this._dataBL.Build(architectureEntity).then(res => {
+                if (!res.result) {
+                    return CreateResponse.FailedResponse(false);
+                }
+            });
+
+            await this._domainBL.Build(architectureEntity).then(res => {
                 if (!res.result) {
                     return CreateResponse.FailedResponse(false);
                 }
