@@ -190,17 +190,17 @@ import {
     I${pascalCaseNameObject}RequestDTO
 } from '@omni-platform-domain';
 
-export const get${pascalCaseNameObject}List = createAction(
+export const ${camelCaseNameMethod}List = createAction(
     '[${pascalCaseNameObject}] Get ${pascalCaseNameObject} List ',
     props<{ country_code: string }>()
 );
 
-export const get${pascalCaseNameObject}ListSuccess = createAction(
+export const ${camelCaseNameMethod}ListSuccess = createAction(
     '[${pascalCaseNameObject}] Get ${pascalCaseNameObject} List Success',
     props<{ ${nameObject}List: I${pascalCaseNameObject}DTO[] }>()
 );
 
-export const get${pascalCaseNameObject}ListFail = createAction(
+export const ${camelCaseNameMethod}ListFail = createAction(
     '[${pascalCaseNameObject}] Get ${pascalCaseNameObject} List Fail',
     props<{ error: string }>()
 );`;
@@ -259,15 +259,15 @@ export const initialState: State = {
 const ${nameObject}Reducer = createReducer(
     initialState,
     // Only NgRx
-    on(${pascalCaseNameObject}Actions.get${pascalCaseNameObject}List, state => ({
+    on(${pascalCaseNameObject}Actions.${camelCaseNameMethod}List, state => ({
     ...state,
     ${nameObject}List: initialState.${nameObject}List
     })),
-    on(${pascalCaseNameObject}Actions.get${pascalCaseNameObject}ListSuccess, (state, { ${nameObject}List }) => ({
+    on(${pascalCaseNameObject}Actions.${camelCaseNameMethod}ListSuccess, (state, { ${nameObject}List }) => ({
     ...state,
     ${nameObject}List: ${pascalCaseNameObject}Adapter.setAll(${nameObject}List, state.${nameObject}List)
     })),
-    on(${pascalCaseNameObject}Actions.get${pascalCaseNameObject}ListFail, state => ({
+    on(${pascalCaseNameObject}Actions.${camelCaseNameMethod}ListFail, state => ({
     ...state,
     ${nameObject}List: initialState.${nameObject}List
     }))
@@ -330,15 +330,15 @@ import { ${pascalCaseNameObject}ApiService } from '@omni-platform-data';
 
 @Injectable()
 export class ${pascalCaseNameObject}Effects {
-    get${pascalCaseNameObject}$ = createEffect(() =>
+    ${camelCaseNameMethod}$ = createEffect(() =>
     this.actions$.pipe(
-        ofType(${pascalCaseNameObject}Actions.get${pascalCaseNameObject}List),
+        ofType(${pascalCaseNameObject}Actions.${camelCaseNameMethod}List),
         exhaustMap(action =>
-        this.${nameObject}ApiService.get${pascalCaseNameObject}(action.country_code).pipe(
+        this.${nameObject}ApiService.${camelCaseNameMethod}(action.country_code).pipe(
             map(${nameObject}List =>
-                ${pascalCaseNameObject}Actions.get${pascalCaseNameObject}ListSuccess({ ${nameObject}List })
+                ${pascalCaseNameObject}Actions.${camelCaseNameMethod}ListSuccess({ ${nameObject}List })
             ),
-            catchError(error => of(${pascalCaseNameObject}Actions.get${pascalCaseNameObject}ListFail(error)))
+            catchError(error => of(${pascalCaseNameObject}Actions.${camelCaseNameMethod}ListFail(error)))
         )
         )
     )
@@ -366,9 +366,9 @@ export class ${pascalCaseNameObject}Effects {
 
         let data = `import { ${pascalCaseNameObject}ApiService } from '@omni-platform-data';
 import {
-    Get${pascalCaseNameObject},
+    ${camelCaseNameMethod},
     I${pascalCaseNameObject}DTO,
-    Get${pascalCaseNameObject}List,
+    ${camelCaseNameMethod}List,
     I${pascalCaseNameObject}Facade
 } from '@omni-platform-domain';
 import { Observable } from 'rxjs';
@@ -388,8 +388,8 @@ public static getInstance(
     return ${pascalCaseNameObject}Facade.instance;
 }
 
-get${pascalCaseNameObject}(params: string): void {
-    return new Get${pascalCaseNameObject}(this.${nameObject}ApiService).execute(params);
+${camelCaseNameMethod}(params: string): void {
+    return new ${camelCaseNameMethod}(this.${nameObject}ApiService).execute(params);
 }
 }`;
 

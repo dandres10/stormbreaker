@@ -16,8 +16,8 @@ const _architectureFacade = Injection.InjectionArchitectureFacade();
 _architectureFacade.Questions().then((questions: Response<QuestionCollection<any>>) => {
   inquirer.prompt(questions?.result || []).then((response) => {
 
-    const pathClient = path.join(DIR_ACTUAL_CLIENT, "src-client");
-    // const pathClient = path.join(DIR_ACTUAL_CLIENT);
+    // const pathClient = path.join(DIR_ACTUAL_CLIENT, "src-client");
+    const pathClient = path.join(DIR_ACTUAL_CLIENT);
 
     const initData: IArchitectureEntity = {
       newPipe: response["type_pipe"] == TEMPLATE_OPTIONS.new_pipe ? true : false,
@@ -31,7 +31,6 @@ _architectureFacade.Questions().then((questions: Response<QuestionCollection<any
 
     }
 
-    console.log(initData);
 
     // const initData: IArchitectureEntity = {
     //   newPipe: true,

@@ -36,7 +36,7 @@ export class DataBL extends ILayerAction {
         return CreateResponse.SuccessfulResponse(true);
     }
     async ExistBase(architectureEntity: IArchitectureEntity): Promise<Response<boolean>> {
-        let validRoute = `${architectureEntity.pathClient}`;
+        let validRoute = `${architectureEntity.pathClient}/data`;
         let responseExistFileOrFolder!: Response<boolean>;
 
         await this._file.ExistFileOrFolder(validRoute).then((res) => responseExistFileOrFolder = res);
@@ -140,7 +140,7 @@ export class DataBL extends ILayerAction {
             }
         });
 
-         const createFiles = [route3, route4, route5];
+         const createFiles = [route3, route4, route5, route6];
 
          for await (const configuration of createFiles) {
             await this._file.CreateFile(configuration.route, configuration.nameFolder, configuration.data, configuration.typeFile).then((res) => {

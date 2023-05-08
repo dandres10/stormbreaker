@@ -21,11 +21,6 @@ export const QUESTIONS = [
         message: "nombre del objeto"
     },
     {
-        name: "base",
-        type: "input",
-        message: "Nombre base"
-    },
-    {
         name: "url",
         type: "input",
         message: "Url del Endpoint"
@@ -42,7 +37,7 @@ export const QUESTIONS = [
     },
     {
         name: "response",
-        type: "input",
+        type: "editor",
         message: "Response del Endpoint"
     }
 ];

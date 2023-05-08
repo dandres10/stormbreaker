@@ -1,8 +1,8 @@
 import { InvoiceApiService } from '@omni-platform-data';
 import {
-    GetInvoice,
+    getInvoice,
     IInvoiceDTO,
-    GetInvoiceList,
+    getInvoiceList,
     IInvoiceFacade
 } from '@omni-platform-domain';
 import { Observable } from 'rxjs';
@@ -23,6 +23,6 @@ public static getInstance(
 }
 
 getInvoice(params: string): void {
-    return new GetInvoice(this.invoiceApiService).execute(params);
+    return new getInvoice(this.invoiceApiService).execute(params);
 }
 }
