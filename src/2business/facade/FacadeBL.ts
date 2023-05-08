@@ -1,7 +1,7 @@
 import { IArchitectureEntity, ILayerAction } from "../../3common-interfaces";
-import { Injection } from "../../4cross";
+import { Injection, TypeFile } from "../../4cross";
 import { CreateResponse } from "../../4cross/class/create-response";
-import { Response } from "../../4cross/interfaces/interfaces-global";
+import { CreateFile, Response } from "../../4cross/interfaces/interfaces-global";
 
 export class FacadeBL extends ILayerAction {
 
@@ -15,12 +15,13 @@ export class FacadeBL extends ILayerAction {
         let responseBuildRepositories!: Response<boolean>;
 
         if (architectureEntity.newPipe) {
-            await this.ExistBase(architectureEntity).then((res) => {
-                if (res.result) {
-                    this._accessCommon.messageError('Action cannot be executed.');
-                    return CreateResponse.FailedResponse(false);
-                }
-            });
+
+            // await this.ExistBase(architectureEntity).then((res) => {
+            //     if (res.result) {
+            //         this._accessCommon.messageError('Action cannot be executed.');
+            //         return CreateResponse.FailedResponse(false);
+            //     }
+            // });
 
 
             await this.CreateBase(architectureEntity).then(res => {
@@ -66,7 +67,7 @@ export class FacadeBL extends ILayerAction {
 
 
     async CreateFolders(architectureEntity: IArchitectureEntity): Promise<Response<boolean>> {
-        const route1 = { route: `${architectureEntity.pathClient}/data/repositories/${architectureEntity.nameObject}`, nameFolder: `${architectureEntity.nameObject}` };
+        const route1 = { route: `${architectureEntity.pathClient}/facade/store/`, nameFolder: `${architectureEntity.nameObject}` };
 
         const createFolders = [route1];
 
@@ -84,36 +85,104 @@ export class FacadeBL extends ILayerAction {
 
 
     async CreateFiles(architectureEntity: IArchitectureEntity): Promise<Response<boolean>> {
-        // let route5!: CreateFile;
+        let route1!: CreateFile;
+        let route2!: CreateFile;
+        let route3!: CreateFile;
 
 
-        // await this.DataImplementationRespository(architectureEntity).then((data) => {
-        //     if (!data)
-        //         return CreateResponse.FailedResponse(false);
-        //     route5 = {
-        //         route: `${architectureEntity.pathClient}/data/repositories/${architectureEntity.nameObject}/`,
-        //         nameFolder: `${architectureEntity.nameObject}-implementation.repository`,
-        //         typeFile: TypeFile.TS,
-        //         data: data.result || ''
-        //     };
-        // });
+        await this.DataImplementationFacadeStore(architectureEntity).then((data) => {
+            if (!data)
+                return CreateResponse.FailedResponse(false);
+            route1 = {
+                route: `${architectureEntity.pathClient}/facade/store/`,
+                nameFolder: `store.facade`,
+                typeFile: TypeFile.TS,
+                data: data.result || ''
+            };
+        });
 
-        // const createFiles = [route5, route6, route7, route8, route9, route10, route11, route12, route13, route14, route15];
+        await this.DataImplementationFacadeIndex(architectureEntity).then((data) => {
+            if (!data)
+                return CreateResponse.FailedResponse(false);
+            route2 = {
+                route: `${architectureEntity.pathClient}/facade/store/`,
+                nameFolder: `index`,
+                typeFile: TypeFile.TS,
+                data: data.result || ''
+            };
+        });
 
-        // for await (const configuration of createFiles) {
-        //     await this._file.CreateArchive(configuration.route, configuration.nameFolder, configuration.data, configuration.typeFile).then((res) => {
-        //         if (!res.result) {
-        //             this._accessCommon.messageError(`Error generating the file of the data layer -> ${configuration.route}`);
-        //             return CreateResponse.FailedResponse(false);
-        //         }
-        //     });
-        // }
+        await this.DataImplementationFacadeIndexIndex(architectureEntity).then((data) => {
+            if (!data)
+                return CreateResponse.FailedResponse(false);
+            route3 = {
+                route: `${architectureEntity.pathClient}/facade/`,
+                nameFolder: `index`,
+                typeFile: TypeFile.TS,
+                data: data.result || ''
+            };
+        });
+
+        const createFiles = [route1, route2, route3];
+
+        for await (const configuration of createFiles) {
+            await this._file.CreateFile(configuration.route, configuration.nameFolder, configuration.data, configuration.typeFile).then((res) => {
+                if (!res.result) {
+                    this._accessCommon.messageError(`Error generating the file of the data layer -> ${configuration.route}`);
+                    return CreateResponse.FailedResponse(false);
+                }
+            });
+        }
 
         return CreateResponse.SuccessfulResponse(true);
 
     }
 
- 
+
+
+    private async DataImplementationFacadeStore(architectureEntity: IArchitectureEntity): Promise<Response<string>> {
+        let { nameObject, nameMethod, request } = architectureEntity;
+        let pascalCaseNameObject = this._accessCommon.PascalCase(nameObject || '');
+        let camelCaseNameObject = this._accessCommon.CamelCase(nameObject || '');
+        let camelCaseNameMethod = this._accessCommon.CamelCase(nameMethod || '');
+        let pascalCaseNameMethod = this._accessCommon.CamelCase(nameMethod || '');
+
+
+        let data = `export * from '@omni-platform-infraestructure';`;
+
+        return CreateResponse.SuccessfulResponse(data);
+
+    }
+
+    private async DataImplementationFacadeIndex(architectureEntity: IArchitectureEntity): Promise<Response<string>> {
+        let { nameObject, nameMethod, request } = architectureEntity;
+        let pascalCaseNameObject = this._accessCommon.PascalCase(nameObject || '');
+        let camelCaseNameObject = this._accessCommon.CamelCase(nameObject || '');
+        let camelCaseNameMethod = this._accessCommon.CamelCase(nameMethod || '');
+        let pascalCaseNameMethod = this._accessCommon.CamelCase(nameMethod || '');
+
+
+        let data = `import './store.facade';`;
+
+        return CreateResponse.SuccessfulResponse(data);
+
+    }
+
+    private async DataImplementationFacadeIndexIndex(architectureEntity: IArchitectureEntity): Promise<Response<string>> {
+        let { nameObject, nameMethod, request } = architectureEntity;
+        let pascalCaseNameObject = this._accessCommon.PascalCase(nameObject || '');
+        let camelCaseNameObject = this._accessCommon.CamelCase(nameObject || '');
+        let camelCaseNameMethod = this._accessCommon.CamelCase(nameMethod || '');
+        let pascalCaseNameMethod = this._accessCommon.CamelCase(nameMethod || '');
+
+
+        let data = `import './store/index';`;
+
+        return CreateResponse.SuccessfulResponse(data);
+
+    }
+
+
 
 
 

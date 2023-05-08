@@ -221,7 +221,7 @@ export class DomainBL extends ILayerAction {
         let camelCaseNameMethod = this._accessCommon.CamelCase(nameMethod || '');
 
 
-        let data = `import { ${pascalCaseNameObject}DTO } from '@omni-platform-dominio';
+        let data = `import { ${pascalCaseNameObject}DTO } from '@omni-platform-domain';
 import { Observable } from 'rxjs';
 
 export abstract class I${pascalCaseNameObject}Service {
@@ -240,7 +240,7 @@ export abstract class I${pascalCaseNameObject}Service {
         let camelCaseNameMethod = this._accessCommon.CamelCase(nameMethod || '');
 
 
-        let data = `import { ${pascalCaseNameObject}DTO } from '@omni-platform-dominio';
+        let data = `import { ${pascalCaseNameObject}DTO } from '@omni-platform-domain';
 import { Observable } from 'rxjs';
 
 export abstract class I${pascalCaseNameObject}Facade {
@@ -261,7 +261,7 @@ export abstract class I${pascalCaseNameObject}Facade {
 
 
         let data = `import { ${pascalCaseNameObject}ApiService } from '@omni-platform-data';
-import { ${pascalCaseNameObject}DTO, UseCase } from '@omni-platform-dominio';
+import { ${pascalCaseNameObject}DTO, UseCase } from '@omni-platform-domain';
 import { Observable } from 'rxjs';
 
 export class ${pascalCaseNameMethod} implements UseCase<${this.ReturnUseCaseInterface(architectureEntity)}> {

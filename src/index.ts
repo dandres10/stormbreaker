@@ -19,41 +19,46 @@ _architectureFacade.Questions().then((questions: Response<QuestionCollection<any
     const pathClient = path.join(DIR_ACTUAL_CLIENT, "src-client");
     // const pathClient = path.join(DIR_ACTUAL_CLIENT);
 
-    // const initData: IArchitectureEntity = {
-    //   newPipe: response["type_pipe"] == TEMPLATE_OPTIONS.new_pipe ? true : false,
-    //   pathClient: pathClient,
-    //   base: response["base"],
-    //   request: response["request"]?.replace(/[\s\{\}]+/g, '').split(';'),
-    //   response: response["response"]?.replace(/[\s\{\}]+/g, '').split(';'),
-    //   url: response["url"]
-    // }
-
     const initData: IArchitectureEntity = {
-      newPipe: true,
+      newPipe: response["type_pipe"] == TEMPLATE_OPTIONS.new_pipe ? true : false,
       pathClient: pathClient,
-      nameObject: 'invoice',
-      nameMethod: 'get_invoice',
-      request: [
-        'params:string',
-      ],
-      response: [
-        'id:number',
-        'options:string[]',
-        'country:string',
-        'operation_type:string',
-        'name:string',
-        'description:string',
-        'image:string',
-        'image_icon: string',
-        'link_show_more: string',
-        'active: boolean',
-        'order: number',
-        'marginLeft?: number',
-        'index?: number',
-      ], 
-      typeResponse: 'array',
-      url: 'invoice/singIn'
+      request: response["request"]?.replace(/[\s\{\}]+/g, '').split(';'),
+      response: response["response"]?.replace(/[\s\{\}]+/g, '').split(';'),
+      url: response["url"],
+      typeResponse: response["typeResponse"],
+      nameMethod: response["nameMethod"],
+      nameObject: response["nameObject"]
+
     }
+
+    console.log(initData);
+
+    // const initData: IArchitectureEntity = {
+    //   newPipe: true,
+    //   pathClient: pathClient,
+    //   nameObject: 'invoice',
+    //   nameMethod: 'get_invoice',
+    //   request: [
+    //     'params:string',
+    //   ],
+    //   response: [
+    //     'id:number',
+    //     'options:string[]',
+    //     'country:string',
+    //     'operation_type:string',
+    //     'name:string',
+    //     'description:string',
+    //     'image:string',
+    //     'image_icon: string',
+    //     'link_show_more: string',
+    //     'active: boolean',
+    //     'order: number',
+    //     'marginLeft?: number',
+    //     'index?: number',
+    //   ],
+    //   typeResponse: 'array',
+    //   url: 'invoice/singIn'
+    // }
     _architectureFacade.BuildArchitecture(initData).then(() => { });
 
   });

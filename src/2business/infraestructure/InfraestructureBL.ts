@@ -188,7 +188,7 @@ export class InfraestructureBL extends ILayerAction {
 import {
     I${pascalCaseNameObject}DTO,
     I${pascalCaseNameObject}RequestDTO
-} from '@omni-platform-dominio';
+} from '@omni-platform-domain';
 
 export const get${pascalCaseNameObject}List = createAction(
     '[${pascalCaseNameObject}] Get ${pascalCaseNameObject} List ',
@@ -222,7 +222,7 @@ export const get${pascalCaseNameObject}ListFail = createAction(
 
         let data = `import { createReducer, on, Action } from '@ngrx/store';
 import * as ${pascalCaseNameObject}Actions from './${nameObject}.actions';
-import { I${pascalCaseNameObject}DTO } from '@omni-platform-dominio';
+import { I${pascalCaseNameObject}DTO } from '@omni-platform-domain';
 import {
     createEntityAdapter,
     Dictionary,
@@ -370,7 +370,7 @@ import {
     I${pascalCaseNameObject}DTO,
     Get${pascalCaseNameObject}List,
     I${pascalCaseNameObject}Facade
-} from '@omni-platform-dominio';
+} from '@omni-platform-domain';
 import { Observable } from 'rxjs';
 
 export class ${pascalCaseNameObject}Facade extends I${pascalCaseNameObject}Facade {
