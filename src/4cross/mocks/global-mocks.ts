@@ -1,4 +1,4 @@
-import { TEMPLATE_OPTIONS } from "../enums/global-enum";
+import { MENU_OPTIONS, TEMPLATE_OPTIONS } from "../enums/global-enum";
 
 
 
@@ -41,4 +41,13 @@ export const QUESTIONS = [
         message: "Response del Endpoint"
     }
 ];
+
+export const QUESTION_MENU = [
+    {
+        name: "itemMenu",
+        type: "list",
+        message: "What do you want to generate?",
+        choices: [MENU_OPTIONS.create_clean_architecture]
+    }
+]
 

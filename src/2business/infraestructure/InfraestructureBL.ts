@@ -16,7 +16,7 @@ export class InfraestructureBL extends ILayerAction {
             await this.ExistBase(architectureEntity).then((res) => {
                 if (res.result) {
                     this._accessCommon.messageError('Action cannot be executed.');
-                    return CreateResponse.FailedResponse(false);
+                    return CreateResponse.FailedResponse();
                 }
             });
 
@@ -24,7 +24,7 @@ export class InfraestructureBL extends ILayerAction {
             await this.CreateBase(architectureEntity).then(res => {
                 if (!res.result) {
                     this._accessCommon.messageError('Action cannot be executed. Create base');
-                    return CreateResponse.FailedResponse(false);
+                    return CreateResponse.FailedResponse();
                 }
             });
         }
@@ -38,7 +38,7 @@ export class InfraestructureBL extends ILayerAction {
         await this._file.ExistFileOrFolder(validRoute).then((res) => responseExistFileOrFolder = res);
         if (responseExistFileOrFolder.result) {
             this._accessCommon.messageError('The pipe already exists.');
-            return CreateResponse.FailedResponse(true);
+            return CreateResponse.FailedResponse();
         }
 
         return CreateResponse.SuccessfulResponse(false);
@@ -48,13 +48,13 @@ export class InfraestructureBL extends ILayerAction {
 
         await this.CreateFolders(architectureEntity).then((res) => {
             if (!res.result) {
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             }
         });
 
         await this.CreateFiles(architectureEntity).then((res) => {
             if (!res.result) {
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             }
         })
 
@@ -74,7 +74,7 @@ export class InfraestructureBL extends ILayerAction {
             await this._file.CreateNewFolder(configuration.route, configuration.nameFolder).then((res) => {
                 if (!res.result) {
                     this._accessCommon.messageError(`Error generating the folder of the data layer -> ${configuration.route}`);
-                    return CreateResponse.FailedResponse(false);
+                    return CreateResponse.FailedResponse();
                 }
             });
         }
@@ -93,7 +93,7 @@ export class InfraestructureBL extends ILayerAction {
 
         await this.DataImplementationAction(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
                 route1 = {
                 route: `${architectureEntity.pathClient}/infraestructure/${architectureEntity.nameObject}/redux/`,
                 nameFolder: `${architectureEntity.nameObject}.actions`,
@@ -104,7 +104,7 @@ export class InfraestructureBL extends ILayerAction {
 
         await this.DataImplementationReducer(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
                 route2 = {
                 route: `${architectureEntity.pathClient}/infraestructure/${architectureEntity.nameObject}/redux/`,
                 nameFolder: `${architectureEntity.nameObject}.reducer`,
@@ -115,7 +115,7 @@ export class InfraestructureBL extends ILayerAction {
 
         await this.DataImplementationSelector(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
                 route3 = {
                 route: `${architectureEntity.pathClient}/infraestructure/${architectureEntity.nameObject}/redux/`,
                 nameFolder: `${architectureEntity.nameObject}.selectors`,
@@ -126,7 +126,7 @@ export class InfraestructureBL extends ILayerAction {
 
         await this.DataImplementationEffect(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
                 route4 = {
                 route: `${architectureEntity.pathClient}/infraestructure/${architectureEntity.nameObject}/redux/`,
                 nameFolder: `${architectureEntity.nameObject}.effects`,
@@ -137,7 +137,7 @@ export class InfraestructureBL extends ILayerAction {
 
         await this.DataImplementationFacade(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
                 route5 = {
                 route: `${architectureEntity.pathClient}/infraestructure/${architectureEntity.nameObject}/redux/`,
                 nameFolder: `${architectureEntity.nameObject}.facade`,
@@ -148,7 +148,7 @@ export class InfraestructureBL extends ILayerAction {
 
         await this.DataImplementationIndex(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route6 = {
                 route: `${architectureEntity.pathClient}/infraestructure/`,
                 nameFolder: `index`,
@@ -164,7 +164,7 @@ export class InfraestructureBL extends ILayerAction {
             await this._file.CreateFile(configuration.route, configuration.nameFolder, configuration.data, configuration.typeFile).then((res) => {
                 if (!res.result) {
                     this._accessCommon.messageError(`Error generating the file of the data layer -> ${configuration.route}`);
-                    return CreateResponse.FailedResponse(false);
+                    return CreateResponse.FailedResponse();
                 }
             });
         }

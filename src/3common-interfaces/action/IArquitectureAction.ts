@@ -9,6 +9,6 @@ export interface IArchitectureAction {
 }
 
 export interface IArchitectureFacade {
-  Questions(): Promise<Response<QuestionCollection<any>>>
-  BuildArchitecture(architectureEntity: IArchitectureEntity): Promise<Response<boolean>>
+  // Questions(): Promise<Response<QuestionCollection<any>>>
+  // BuildArchitecture(architectureEntity: IArchitectureEntity): Promise<Response<boolean>>
 }

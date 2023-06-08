@@ -19,14 +19,14 @@ export class DomainBL extends ILayerAction {
             await this.ExistBase(architectureEntity).then((res) => {
                 if (res.result) {
                     this._accessCommon.messageError('Action cannot be executed.');
-                    return CreateResponse.FailedResponse(false);
+                    return CreateResponse.FailedResponse();
                 }
             });
 
             await this.CreateBase(architectureEntity).then(res => {
                 if (!res.result) {
                     this._accessCommon.messageError('Action cannot be executed. Create base');
-                    return CreateResponse.FailedResponse(false);
+                    return CreateResponse.FailedResponse();
                 }
             });
         }
@@ -42,7 +42,7 @@ export class DomainBL extends ILayerAction {
         await this._file.ExistFileOrFolder(validRoute).then((res) => responseExistFileOrFolder = res);
         if (responseExistFileOrFolder.result) {
             this._accessCommon.messageError('The pipe already exists.');
-            return CreateResponse.FailedResponse(true);
+            return CreateResponse.FailedResponse();
         }
 
         return CreateResponse.SuccessfulResponse(false);
@@ -52,13 +52,13 @@ export class DomainBL extends ILayerAction {
 
         await this.CreateFolders(architectureEntity).then((res) => {
             if (!res.result) {
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             }
         });
 
         await this.CreateFiles(architectureEntity).then((res) => {
             if (!res.result) {
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             }
         })
 
@@ -76,7 +76,7 @@ export class DomainBL extends ILayerAction {
             await this._file.CreateNewFolder(configuration.route, configuration.nameFolder).then((res) => {
                 if (!res.result) {
                     this._accessCommon.messageError(`Error generating the folder of the data layer -> ${configuration.route}`);
-                    return CreateResponse.FailedResponse(false);
+                    return CreateResponse.FailedResponse();
                 }
             });
         }
@@ -102,7 +102,7 @@ export class DomainBL extends ILayerAction {
 
         await this.DomainImplementationService(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route1 = {
                 route: `${architectureEntity.pathClient}/domain/abstract/${architectureEntity.nameObject}/`,
                 nameFolder: `I${pascalCaseNameObject}Service`,
@@ -113,7 +113,7 @@ export class DomainBL extends ILayerAction {
 
         await this.DomainImplementationFacade(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route2 = {
                 route: `${architectureEntity.pathClient}/domain/abstract/${architectureEntity.nameObject}/`,
                 nameFolder: `I${pascalCaseNameObject}Facade`,
@@ -124,7 +124,7 @@ export class DomainBL extends ILayerAction {
 
         await this.DomainImplementationIndex(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route3 = {
                 route: `${architectureEntity.pathClient}/domain/abstract/${architectureEntity.nameObject}/`,
                 nameFolder: `index`,
@@ -135,7 +135,7 @@ export class DomainBL extends ILayerAction {
 
         await this.DomainImplementationInterface(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route4 = {
                 route: `${architectureEntity.pathClient}/domain/interfaces/${architectureEntity.nameObject}/`,
                 nameFolder: `${nameObject}-interface`,
@@ -146,7 +146,7 @@ export class DomainBL extends ILayerAction {
 
         await this.DomainImplementationInterfaceIndex(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route5 = {
                 route: `${architectureEntity.pathClient}/domain/interfaces/${architectureEntity.nameObject}/`,
                 nameFolder: `index`,
@@ -157,7 +157,7 @@ export class DomainBL extends ILayerAction {
 
         await this.DomainImplementationUseCase(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route6 = {
                 route: `${architectureEntity.pathClient}/domain/use-cases/${architectureEntity.nameObject}/`,
                 nameFolder: `${nameMethodMid}.usecase`,
@@ -168,7 +168,7 @@ export class DomainBL extends ILayerAction {
 
         await this.DomainImplementationUseCaseIndex(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route7 = {
                 route: `${architectureEntity.pathClient}/domain/use-cases/`,
                 nameFolder: `index`,
@@ -179,7 +179,7 @@ export class DomainBL extends ILayerAction {
 
         await this.DomainImplementationDominioModule(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route8 = {
                 route: `${architectureEntity.pathClient}/domain/`,
                 nameFolder: `dominio.module`,
@@ -190,7 +190,7 @@ export class DomainBL extends ILayerAction {
 
         await this.DomainImplementationDominioModuleIndex(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route9 = {
                 route: `${architectureEntity.pathClient}/domain/`,
                 nameFolder: `index`,
@@ -205,7 +205,7 @@ export class DomainBL extends ILayerAction {
             await this._file.CreateFile(configuration.route, configuration.nameFolder, configuration.data, configuration.typeFile).then((res) => {
                 if (!res.result) {
                     this._accessCommon.messageError(`Error generating the file of the data layer -> ${configuration.route}`);
-                    return CreateResponse.FailedResponse(false);
+                    return CreateResponse.FailedResponse();
                 }
             });
         }

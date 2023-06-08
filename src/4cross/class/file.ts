@@ -28,8 +28,8 @@ export class File {
                     reject(err)
                 }
                 else {
-                    console.log(`Carpeta creada -> ${nameFile}`);
-                    resolve(CreateResponse.SuccessfulResponse(`Carpeta creada - ${nameFile}`));
+                    console.log(`Created folder ${route} -> ${nameFile}`);
+                    resolve(CreateResponse.SuccessfulResponse(`Created folder - ${nameFile}`));
                 }
             });
             fs.close;

@@ -21,7 +21,7 @@ export class DataExampleBL extends ILayerAction {
             await this.ExistBase(architectureEntity).then((res) => {
                 if (res.result) {
                     this._accessCommon.messageError('Action cannot be executed.');
-                    return CreateResponse.FailedResponse(false);
+                    return CreateResponse.FailedResponse();
                 }
             });
 
@@ -29,7 +29,7 @@ export class DataExampleBL extends ILayerAction {
             await this.CreateBase(architectureEntity).then(res => {
                 if (!res.result) {
                     this._accessCommon.messageError('Action cannot be executed. Create base');
-                    return CreateResponse.FailedResponse(false);
+                    return CreateResponse.FailedResponse();
                 }
             });
         }
@@ -45,7 +45,7 @@ export class DataExampleBL extends ILayerAction {
         await this._file.ExistFileOrFolder(validRoute).then((res) => responseExistFileOrFolder = res);
         if (responseExistFileOrFolder.result) {
             this._accessCommon.messageError('The pipe already exists.');
-            return CreateResponse.FailedResponse(true);
+            return CreateResponse.FailedResponse();
         }
 
         return CreateResponse.SuccessfulResponse(false);
@@ -56,13 +56,13 @@ export class DataExampleBL extends ILayerAction {
 
         await this.CreateFolders(architectureEntity).then((res) => {
             if (!res.result) {
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             }
         });
 
         await this.CreateFiles(architectureEntity).then((res) => {
             if (!res.result) {
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             }
         })
 
@@ -85,7 +85,7 @@ export class DataExampleBL extends ILayerAction {
 
         await this.DataImplementationRespository(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route5 = {
                 route: `${architectureEntity.pathClient}/data/repositories/${architectureEntity.nameObject}/`,
                 nameFolder: `${architectureEntity.nameObject}-implementation.repository`,
@@ -96,7 +96,7 @@ export class DataExampleBL extends ILayerAction {
 
         await this.DataEntity(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route6 = {
                 route: `${architectureEntity.pathClient}/data/repositories/${architectureEntity.nameObject}/entities/`,
                 nameFolder: `${architectureEntity.nameObject}-entity`,
@@ -108,7 +108,7 @@ export class DataExampleBL extends ILayerAction {
 
         await this.Mapper(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route7 = {
                 route: `${architectureEntity.pathClient}/data/repositories/${architectureEntity.nameObject}/mappers/`,
                 nameFolder: `${architectureEntity.nameObject}.mapper`,
@@ -120,7 +120,7 @@ export class DataExampleBL extends ILayerAction {
 
         await this.ActionsRedux(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route8 = {
                 route: `${architectureEntity.pathClient}/data/repositories/${architectureEntity.nameObject}/redux/`,
                 nameFolder: `${architectureEntity.nameObject}.actions`,
@@ -132,7 +132,7 @@ export class DataExampleBL extends ILayerAction {
 
         await this.EffectsRedux(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route9 = {
                 route: `${architectureEntity.pathClient}/data/repositories/${architectureEntity.nameObject}/redux/`,
                 nameFolder: `${architectureEntity.nameObject}.effects`,
@@ -144,7 +144,7 @@ export class DataExampleBL extends ILayerAction {
 
         await this.ReducerRedux(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route10 = {
                 route: `${architectureEntity.pathClient}/data/repositories/${architectureEntity.nameObject}/redux/`,
                 nameFolder: `${architectureEntity.nameObject}.reducer`,
@@ -156,7 +156,7 @@ export class DataExampleBL extends ILayerAction {
 
         await this.SelectorsRedux(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route11 = {
                 route: `${architectureEntity.pathClient}/data/repositories/${architectureEntity.nameObject}/redux/`,
                 nameFolder: `${architectureEntity.nameObject}.selectors`,
@@ -168,7 +168,7 @@ export class DataExampleBL extends ILayerAction {
 
         await this.IndexRedux(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route12 = {
                 route: `${architectureEntity.pathClient}/data/repositories/${architectureEntity.nameObject}/redux/`,
                 nameFolder: `index`,
@@ -180,7 +180,7 @@ export class DataExampleBL extends ILayerAction {
 
         await this.IndexEntity(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route13 = {
                 route: `${architectureEntity.pathClient}/data/repositories/${architectureEntity.nameObject}/`,
                 nameFolder: `index`,
@@ -192,7 +192,7 @@ export class DataExampleBL extends ILayerAction {
 
         await this.DataIndexEntity(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route14 = {
                 route: `${architectureEntity.pathClient}/data/`,
                 nameFolder: `index`,
@@ -203,7 +203,7 @@ export class DataExampleBL extends ILayerAction {
         });
         await this.DataModule(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route15 = {
                 route: `${architectureEntity.pathClient}/data/`,
                 nameFolder: `data.module`,
@@ -220,7 +220,7 @@ export class DataExampleBL extends ILayerAction {
             await this._file.CreateFile(configuration.route, configuration.nameFolder, configuration.data, configuration.typeFile).then((res) => {
                 if (!res.result) {
                     this._accessCommon.messageError(`Error generating the file of the data layer -> ${configuration.route}`);
-                    return CreateResponse.FailedResponse(false);
+                    return CreateResponse.FailedResponse();
                 }
             });
         }
@@ -845,7 +845,7 @@ export class ${pascalCaseNameObject}ImplementationRepository extends ${pascalCas
             await this._file.CreateNewFolder(configuration.route, configuration.nameFolder).then((res) => {
                 if (!res.result) {
                     this._accessCommon.messageError(`Error generating the folder of the data layer -> ${configuration.route}`);
-                    return CreateResponse.FailedResponse(false);
+                    return CreateResponse.FailedResponse();
                 }
             });
         }

@@ -19,9 +19,8 @@ export class CreateResponse {
         } as Response<T>
     }
 
-    public static FailedResponse<T>(result: T | null): Response<T> {
+    public static FailedResponse<T>(): Response<T> {
         return {
-            result: result,
             notificationType: NotificationTypeEnum.FAILED,
             isValid: false
         } as Response<T>

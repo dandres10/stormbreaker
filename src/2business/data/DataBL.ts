@@ -20,7 +20,7 @@ export class DataBL extends ILayerAction {
             await this.ExistBase(architectureEntity).then((res) => {
                 if (res.result) {
                     this._accessCommon.messageError('Action cannot be executed.');
-                    return CreateResponse.FailedResponse(false);
+                    return CreateResponse.FailedResponse();
                 }
             });
 
@@ -28,7 +28,7 @@ export class DataBL extends ILayerAction {
             await this.CreateBase(architectureEntity).then(res => {
                 if (!res.result) {
                     this._accessCommon.messageError('Action cannot be executed. Create base');
-                    return CreateResponse.FailedResponse(false);
+                    return CreateResponse.FailedResponse();
                 }
             });
         }
@@ -42,7 +42,7 @@ export class DataBL extends ILayerAction {
         await this._file.ExistFileOrFolder(validRoute).then((res) => responseExistFileOrFolder = res);
         if (responseExistFileOrFolder.result) {
             this._accessCommon.messageError('The pipe already exists.');
-            return CreateResponse.FailedResponse(true);
+            return CreateResponse.FailedResponse();
         }
 
         return CreateResponse.SuccessfulResponse(false);
@@ -52,13 +52,13 @@ export class DataBL extends ILayerAction {
 
         await this.CreateFolders(architectureEntity).then((res) => {
             if (!res.result) {
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             }
         });
 
         await this.CreateFiles(architectureEntity).then((res) => {
             if (!res.result) {
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             }
         })
 
@@ -77,7 +77,7 @@ export class DataBL extends ILayerAction {
             await this._file.CreateNewFolder(configuration.route, configuration.nameFolder).then((res) => {
                 if (!res.result) {
                     this._accessCommon.messageError(`Error generating the folder of the data layer -> ${configuration.route}`);
-                    return CreateResponse.FailedResponse(false);
+                    return CreateResponse.FailedResponse();
                 }
             });
         }
@@ -95,7 +95,7 @@ export class DataBL extends ILayerAction {
 
         await this.DataIndexAdapter(architectureEntity).then((data) => {
             if (!data)
-                 return CreateResponse.FailedResponse(false);
+                 return CreateResponse.FailedResponse();
         route3 = {
                route: `${architectureEntity.pathClient}/data/adapters/${architectureEntity.nameObject}/`,
                 nameFolder: `index`,
@@ -107,7 +107,7 @@ export class DataBL extends ILayerAction {
 
         await this.DataAdapter(architectureEntity).then((data) => {
             if (!data)
-                 return CreateResponse.FailedResponse(false);
+                 return CreateResponse.FailedResponse();
  
            route4 = {
             route: `${architectureEntity.pathClient}/data/adapters/${architectureEntity.nameObject}/`,
@@ -120,7 +120,7 @@ export class DataBL extends ILayerAction {
 
         await this.DataService(architectureEntity).then((data) => {
             if (!data)
-                 return CreateResponse.FailedResponse(false);
+                 return CreateResponse.FailedResponse();
 
            route5 = {
             route: `${architectureEntity.pathClient}/data/api-service/${architectureEntity.nameObject}/`,
@@ -131,7 +131,7 @@ export class DataBL extends ILayerAction {
          });
          await this.DataIndex(architectureEntity).then((data) => {
             if (!data)
-                return CreateResponse.FailedResponse(false);
+                return CreateResponse.FailedResponse();
             route6 = {
                 route: `${architectureEntity.pathClient}/data/`,
                 nameFolder: `index`,
@@ -146,7 +146,7 @@ export class DataBL extends ILayerAction {
             await this._file.CreateFile(configuration.route, configuration.nameFolder, configuration.data, configuration.typeFile).then((res) => {
                 if (!res.result) {
                   this._accessCommon.messageError(`Error generating the file of the data layer -> ${configuration.route}`);
-                     return CreateResponse.FailedResponse(false);
+                     return CreateResponse.FailedResponse();
                }
              });
          }

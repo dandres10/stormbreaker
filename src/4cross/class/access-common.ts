@@ -92,4 +92,12 @@ export class AccessCommon {
         return data.replace(/[^A-Za-z0-9]/g, '');
     }
 
+    public async ExecuteTransaction<T>(func: Function): Promise<Response<T>> {
+        try {
+            return await func();
+        } catch (error: any) {
+            return CreateResponse.FailedResponse<T>();
+        }
+    }
+
 }
