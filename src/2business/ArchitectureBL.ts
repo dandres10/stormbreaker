@@ -101,7 +101,8 @@ export class ArchitectureBL implements IArchitectureAction {
             await this.QuestionMenu().then((questionMenu) => responseQuestionMenu = questionMenu);
             await inquirer.prompt(responseQuestionMenu.result || []).then((prompt) => responseMenuInquirer = prompt);
 
-            this.pathClient = path.join(dirActualClient, "src-client");
+            // this.pathClient = path.join(dirActualClient, "src-client"); //develop
+            this.pathClient = dirActualClient //produccion
             const itemMenuSelected = responseMenuInquirer["itemMenu"] as MENU_OPTIONS;
 
             switch (itemMenuSelected) {
@@ -125,9 +126,9 @@ export class ArchitectureBL implements IArchitectureAction {
             figlet("STORMBREAKER-CLI", async (err, data) => {
                 return await this._accessCommon.ExecuteTransaction<any>(async () => {
                     console.log(chalk.blue(data));
-                    console.log(chalk.blue(`stormbreaker-cli: ${process.env.LIBRARY}`));
-                    console.log(chalk.blue(`Node: ${process.env.NODEE}`));
-                    console.log(chalk.blue(`Author: ${process.env.AUTHOR}`));
+                    console.log(chalk.blue(`stormbreaker-cli: 1.0.17`));
+                    console.log(chalk.blue(`Node: 18.16.0`));
+                    console.log(chalk.blue(`Author: Marlon Andrés León León`));
                     console.log(chalk.blue(`...........................................`));
                     console.log(chalk.blue(`                                            `));
                     return await this.Build(dirActualClient);
