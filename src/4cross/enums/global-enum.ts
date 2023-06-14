@@ -72,6 +72,7 @@ export const CORE_ROUTES_CLEAR_ARCHITECTURE: string[] = [
     ROUTES_CLEAR_ARCHITECTURE.infraestructureReduxReducers,
     ROUTES_CLEAR_ARCHITECTURE.infraestructureReduxSelectors,
     ROUTES_CLEAR_ARCHITECTURE.infraestructureXState,
+    ROUTES_CLEAR_ARCHITECTURE.infraestructureUtils,
     ROUTES_CLEAR_ARCHITECTURE.facade,
     ROUTES_CLEAR_ARCHITECTURE.facadeStore,
     ROUTES_CLEAR_ARCHITECTURE.facadeUI,
