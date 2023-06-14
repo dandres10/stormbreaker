@@ -126,7 +126,7 @@ export class ArchitectureBL implements IArchitectureAction {
             figlet("STORMBREAKER-CLI", async (err, data) => {
                 return await this._accessCommon.ExecuteTransaction<any>(async () => {
                     console.log(chalk.blue(data));
-                    console.log(chalk.blue(`stormbreaker-cli: 1.0.17`));
+                    console.log(chalk.blue(`stormbreaker-cli: 1.0.18`));
                     console.log(chalk.blue(`Node: 18.16.0`));
                     console.log(chalk.blue(`Author: Marlon Andrés León León`));
                     console.log(chalk.blue(`...........................................`));

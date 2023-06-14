@@ -42,6 +42,7 @@ export enum ROUTES_CLEAR_ARCHITECTURE {
     infraestructureReduxReducers = '/infraestructure/redux/reducers',
     infraestructureReduxSelectors = '/infraestructure/redux/selectors',
     infraestructureXState = '/infraestructure/xstate',
+    infraestructureUtils = '/infraestructure/utils',
     facade = '/facade',
     facadeStore = '/facade/store',
     facadeUI = '/facade/ui',
